@@ -8,12 +8,12 @@ export default function Main() {
     const { props } = usePage();
     const { materi } = props;
     return (
-        <div className="relative z-30">
+        <div className="relative">
             <Header/>
-            <div className="relative pt-24 -z-10">
+            <div className="relative pt-24 -z-20">
                 <MainSection/>
             </div>
-            <div className="relative -mt-48">
+            <div className="relative -mt-48 -z-10">
                 <AkreditasSection />
                 <CourseSection/>
             </div>
