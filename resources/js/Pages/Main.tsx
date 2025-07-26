@@ -7,15 +7,17 @@ import { usePage } from "@inertiajs/react";
 export default function Main() {
     const { props } = usePage();
     const { materi } = props;
+
     return (
         <div className="relative">
-            <Header/>
-            <div className="relative pt-24 -z-20">
-                <MainSection/>
+            <Header />
+            <div className="relative pt-24 overflow-hidden">
+                <MainSection />
             </div>
-            <div className="relative -mt-48 -z-10">
+
+            <div className="relative -mt-48 px-4">
                 <AkreditasSection />
-                <CourseSection/>
+                <CourseSection />
             </div>
         </div>
     );
