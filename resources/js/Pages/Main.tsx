@@ -15,7 +15,7 @@ export default function Main() {
                 <MainSection />
             </div>
 
-            <div className="relative -mt-48 px-4">
+            <div className="relative -mt-48">
                 <AkreditasSection />
                 <CourseSection />
             </div>
