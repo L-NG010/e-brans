@@ -154,7 +154,7 @@ export default function Header(): JSX.Element {
                         }`}
                     >
                         {/* SMK BRAKA - selalu ada */}
-                        <div className="text-xl md:text-2xl font-extrabold text-[#465159] leading-none whitespace-nowrap">
+                        <div className="text-xl  font-extrabold text-[#465159] leading-none whitespace-nowrap">
                             SMK BRAKA
                         </div>
                         {/* BRANTAS KARANGKATES - hilang saat collapsed */}
