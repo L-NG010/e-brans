@@ -208,77 +208,72 @@ const Materi = () => {
             onMouseLeave={() => setHoveredCard(null)}
           >
             <motion.div
-              className="relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden z-0 border border-gray-200"
-              whileHover={{ scale: 1.05, y: -5 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {/* Isi Card */}
-              <div className="absolute -top-4 -right-4 w-20 h-20 bg-blue-100 rounded-full"></div>
-              <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-blue-50 rounded-full"></div>
-              <div className="relative z-10 flex flex-col items-start text-left pl-4">
-                <img src={major.img} alt="" />
-                <div className="w-full bg-green-600 text-white text-center py-2 mt-4">
-                  KELAS {major.kelas}
-                </div>
-                <div className="text-gray-700 font-semibold text-sm">
-                  {major.jurusan}
-                </div>
-                <div className="text-gray-800 font-semibold text-lg">
-                  {major.title}
-                </div>
-                <div className="text-gray-500 text-sm mt-2">
-                  {major.duration} {major.learned}
-                </div>
-                <div className="mt-4 flex space-x-2">
-                  <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded text-sm">
-                    Tentang
-                  </button>
-                  <button className="px-4 py-2 bg-blue-600 text-white rounded text-sm">
-                    Mulai Belajar
-                  </button>
-                </div>
-              </div>
+  className="relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden z-0 border border-gray-200"
+  whileHover={{ scale: 1.05, y: -5 }}
+  whileTap={{ scale: 0.95 }}
+>
+  {/* Background hiasan */}
+  <div className="absolute -top-4 -right-4 w-20 h-20 bg-blue-100 rounded-full"></div>
+  <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-blue-50 rounded-full"></div>
 
-              {/* Hover Detail Menutupi Card */}
-              {hoveredCard === major.id && (
-                <motion.div
-                  className="absolute inset-0 bg-white rounded-2xl p-4 shadow-2xl z-20"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <h4 className="text-lg font-bold text-gray-800">
-                    {major.description.title}
-                  </h4>
-                  <p className="text-sm text-gray-600">
-                    {major.description.duration} | {major.description.lessons}
-                  </p>
-                  <h4 className="text-lg font-bold text-gray-600">
-                    {major.description.created}
-                  </h4>
-                  <div className="w-full border-t-2 border-gray-300 my-4 mx-auto"></div>
-                  <div className="mt-2">
-                    <h5 className="text-sm font-semibold">
-                      Materi Yang Diajarkan
-                    </h5>
-                    <ul className="text-sm text-gray-700 list-disc list-inside">
-                      {major.description.materials.map((material, i) => (
-                        <li key={i}>{material}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="mt-4 flex justify-between">
-                    <button className="text-blue-500 hover:underline">
-                      Tentang
-                    </button>
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">
-                      Mulai Belajar
-                    </button>
-                  </div>
-                </motion.div>
-              )}
-            </motion.div>
+  {/* Konten Utama */}
+  <div className="relative z-10 flex flex-col items-start text-left pl-4 pb-20">
+    <img src={major.img} alt="" />
+    <div className="w-full bg-green-600 text-white text-center py-2 mt-4">
+      KELAS {major.kelas}
+    </div>
+    <div className="text-gray-700 font-semibold text-sm">
+      {major.jurusan}
+    </div>
+    <div className="text-gray-800 font-semibold text-lg">
+      {major.title}
+    </div>
+    <div className="text-gray-500 text-sm mt-2">
+      {major.duration} {major.learned}
+    </div>
+  </div>
+
+  {/* Tombol tetap di bawah */}
+  <div className="absolute bottom-4 left-4 flex space-x-2 z-30">
+    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded text-sm">
+      Tentang
+    </button>
+    <button className="px-4 py-2 bg-blue-600 text-white rounded text-sm">
+      Mulai Belajar
+    </button>
+  </div>
+
+  {/* Hover Detail */}
+  {hoveredCard === major.id && (
+    <motion.div
+      className="absolute inset-0 bg-white rounded-2xl p-4 shadow-2xl z-20 pb-20"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <h4 className="text-lg font-bold text-gray-800">
+        {major.description.title}
+      </h4>
+      <p className="text-sm text-gray-600">
+        {major.description.duration} | {major.description.lessons}
+      </p>
+      <h4 className="text-lg font-bold text-gray-600">
+        {major.description.created}
+      </h4>
+      <div className="w-full border-t-2 border-gray-300 my-4 mx-auto"></div>
+      <div className="mt-2">
+        <h5 className="text-sm font-semibold">Materi Yang Diajarkan</h5>
+        <ul className="text-sm text-gray-700 list-disc list-inside">
+          {major.description.materials.map((material, i) => (
+            <li key={i}>{material}</li>
+          ))}
+        </ul>
+      </div>
+    </motion.div>
+  )}
+</motion.div>
+
           </div>
         ))}
       </div>
