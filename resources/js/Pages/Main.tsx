@@ -3,7 +3,7 @@ import MainSection from "@/Sections/MainSection";
 import Header from "@/Layouts/Header";
 import CourseSection from "@/Sections/CourseSection";
 import { usePage } from "@inertiajs/react";
-import Footer from "@/Sections/Footer";
+import Footer from "@/Layouts/Footer";
 
 export default function Main() {
     const { props } = usePage();

@@ -1,4 +1,6 @@
 const Footer = () => {
+    const logo: string = "/assets/img/smkbraka-icon.png";
+
     return (
         <footer className="w-full bg-gray-100 border-t border-gray-200 py-12 mt-20">
             <div className="max-w-6xl mx-auto px-4">
@@ -7,7 +9,7 @@ const Footer = () => {
                     {/* About Section */}
                     <div className="md:col-span-1">
                         <h3 className="text-lg font-bold text-gray-800 mb-4">
-                            Nama Sekolah
+                            SMK Brantas Karangkates
                         </h3>
                         <p className="text-gray-600 text-sm">
                             Memberikan pendidikan berkualitas untuk membentuk
@@ -63,8 +65,8 @@ const Footer = () => {
                             Kontak
                         </h3>
                         <ul className="space-y-2 text-gray-600 text-sm">
-                            <li>Jl. Contoh No. 123, Kota</li>
-                            <li>Telp: (021) 12345678</li>
+                            <li>JL. LOLARAS 14 65165 Sumberpucung Malang</li>
+                            <li>(0341) 385876</li>
                             <li>Email: info@sekolah.sch.id</li>
                         </ul>
                     </div>
@@ -105,8 +107,8 @@ const Footer = () => {
                             </a>
                         </div>
                         {/* Logo Placeholder */}
-                        <div className="mt-6 w-24 h-10 bg-gray-300 rounded flex items-center justify-center text-xs text-gray-500">
-                            Logo
+                        <div className="mt-8 w-24 h-10 bg-gray-300 rounded flex items-center justify-center text-xs text-gray-500">
+                            <img src={logo} alt="logo sekolah" />
                         </div>
                     </div>
                 </div>
