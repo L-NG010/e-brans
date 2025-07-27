@@ -2,8 +2,6 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 
 const MainSection = () => {
-    const [selected, setSelected] = useState("X");
-    const grades = ["X", "XI", "XII"];
     const manandwomantalking = "/assets/img/manadnwomantalking.png";
     const smartphone = "/assets/img/freepik--Smartphone--inject-10.png";
     const book = "/assets/img/freepik--files--inject-369.png";
@@ -12,30 +10,7 @@ const MainSection = () => {
     return (
         <div className="flex flex-col items-center min-h-screen relative">
             <div className="flex flex-col items-center w-full mt-16">
-                <div className="flex items-center gap-4 mb-6 w-full max-w-md px-4">
-                    <img
-                        src={student}
-                        alt="ikon siswa"
-                        width={40}
-                        className="mr-2"
-                    />
-                    <div className="flex bg-blue-50 rounded-full p-1 w-full shadow-inner">
-                        {grades.map((grade) => (
-                            <button
-                                key={grade}
-                                onClick={() => setSelected(grade)}
-                                className={`flex-1 h-12 flex items-center justify-center rounded-full font-bold transition-all
-                                ${
-                                    selected === grade
-                                        ? "bg-blue-600 text-white shadow-md"
-                                        : "text-blue-800 hover:bg-blue-100"
-                                }`}
-                            >
-                                {grade}
-                            </button>
-                        ))}
-                    </div>
-                </div>
+                {/* Bagian grades dihapus */}
             </div>
 
             <div className="relative w-full max-w-xl my-12 z-10">
@@ -49,8 +24,7 @@ const MainSection = () => {
                 />
             </div>
 
-
-            <div className="flex justify-between items-end w-full absolute bottom-20 -z-10 ">
+            <div className="flex justify-between items-end w-full absolute bottom-20 -z-10">
                 <img
                     src={smartphone}
                     alt="gambar handphone"
