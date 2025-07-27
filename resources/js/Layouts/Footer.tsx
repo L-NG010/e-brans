@@ -116,7 +116,7 @@ const Footer = () => {
                 {/* Copyright */}
                 <div className="border-t border-gray-200 mt-10 pt-6 text-center">
                     <p className="text-gray-500 text-sm">
-                        &copy; {new Date().getFullYear()} Nama Sekolah. Hak
+                        &copy; {new Date().getFullYear()} SMK Brantas Karangkates. Hak
                         Cipta Dilindungi.
                     </p>
                 </div>
