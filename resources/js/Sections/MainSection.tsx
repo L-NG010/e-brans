@@ -11,7 +11,6 @@ const MainSection = () => {
 
     return (
         <div className="flex flex-col items-center min-h-screen relative">
-            {/* Section Grades dengan Icon Siswa */}
             <div className="flex flex-col items-center w-full mt-16">
                 <div className="flex items-center gap-4 mb-6 w-full max-w-md px-4">
                     <img
@@ -39,7 +38,6 @@ const MainSection = () => {
                 </div>
             </div>
 
-            {/* Search Bar - Tengah Layar */}
             <div className="relative w-full max-w-xl my-12 z-10">
                 <div className="absolute transform translate-x-36 inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <Search size={18} className="text-gray-500" />
@@ -51,26 +49,28 @@ const MainSection = () => {
                 />
             </div>
 
-            {/* Tiga Gambar - Bawah Layar */}
 
-            <div className="flex justify-between items-end w-full absolute bottom-20 -z-10 " data-aos="fade-down-right">
+            <div className="flex justify-between items-end w-full absolute bottom-20 -z-10 ">
                 <img
                     src={smartphone}
                     alt="gambar handphone"
                     width={300}
                     className="-ml-16"
+                    data-aos="fade-right"
                 />
                 <img
                     src={manandwomantalking}
                     alt="gambar objek"
                     width={450}
                     className="mx-auto"
+                    data-aos="fade-up"
                 />
                 <img
                     src={book}
                     alt="gambar buku"
                     width={380}
                     className="-mr-32"
+                    data-aos="fade-left"
                 />
             </div>
         </div>

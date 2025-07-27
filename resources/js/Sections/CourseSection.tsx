@@ -155,22 +155,44 @@ const CourseSection = () => {
                 })}
             </div>
 
-            {visibleCount < majors.length && (
-                <motion.div
-                    onClick={loadMore}
-                    className="mt-8 cursor-pointer rounded-full border border-gray-300 px-6 py-3 text-center text-gray-500 transition-colors duration-300 ease-in-out relative inline-block overflow-hidden group"
-                    whileHover={{
-                        borderColor: "transparent",
-                        color: "#fff",
-                        backgroundImage:
-                            "linear-gradient(to right, #ff6f00, #ffcc00)",
-                    }}
-                    data-aos="fade-up"
-                >
-                    Load More
-                    <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-white to-white transition-all duration-500 ease-in-out group-hover:left-0 group-hover:w-full"></span>
-                </motion.div>
-            )}
+           {visibleCount < majors.length && (
+    <motion.button
+        onClick={loadMore}
+        className="mt-8 relative inline-flex items-center justify-center px-6 py-3 font-medium text-gray-600 bg-white rounded-full cursor-pointer group transition-all duration-300"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        data-aos="fade-up"
+    >
+        {/* Outline dasar */}
+        <div className="absolute inset-0 rounded-full border-2 border-gray-300 group-hover:border-transparent transition-all duration-300"></div>
+        
+        {/* Efek neon glow */}
+        <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-blue-400 group-hover:shadow-[0_0_15px_3px_rgba(59,130,246,0.5)] opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+        
+        {/* Efek neon glow sekunder */}
+        <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-purple-400 group-hover:shadow-[0_0_25px_5px_rgba(147,51,234,0.3)] opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100"></div>
+        
+        {/* Konten tombol */}
+        <span className="relative flex items-center gap-2 z-10">
+            <span>Load More</span>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="transition-transform duration-300 group-hover:rotate-90"
+            >
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+        </span>
+    </motion.button>
+)}
         </div>
     );
 };
