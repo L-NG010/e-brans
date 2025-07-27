@@ -3,6 +3,7 @@ import MainSection from "@/Sections/MainSection";
 import Header from "@/Layouts/Header";
 import CourseSection from "@/Sections/CourseSection";
 import { usePage } from "@inertiajs/react";
+import Footer from "@/Sections/Footer";
 
 export default function Main() {
     const { props } = usePage();
@@ -18,6 +19,7 @@ export default function Main() {
             <div className="relative -mt-48">
                 <AkreditasSection />
                 <CourseSection />
+                <Footer/>
             </div>
         </div>
     );
