@@ -5,6 +5,7 @@ import CourseSection from "@/Sections/CourseSection";
 import { usePage } from "@inertiajs/react";
 import Footer from "@/Layouts/Footer";
 import Materi from "@/Sections/Materi";
+import FirstSection from "@/Sections/FirstSection";
 
 export default function Main() {
     const { props } = usePage();
@@ -14,10 +15,11 @@ export default function Main() {
         <div className="relative">
             <Header />
             <div className="relative pt-24 overflow-hidden">
+                <FirstSection/>
                 <MainSection />
             </div>
 
-            <div className="relative -mt-48">
+            <div className="relative -mt-28">
                 <AkreditasSection />
                 <CourseSection />
                 <Materi/>
