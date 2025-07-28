@@ -10,7 +10,6 @@ const MainSection = () => {
 
     return (
         <div className="flex flex-col items-center min-h-screen relative">
-            {/* Background div with lower z-index */}
             <div
                 className="absolute inset-0 bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600"
                 style={{
@@ -18,13 +17,12 @@ const MainSection = () => {
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundBlendMode: "overlay",
-                    zIndex: -1, // Ensure background is behind all content
+                    zIndex: -1,
                 }}
             ></div>
 
             <div className="relative font-extrabold text-3xl text-white mt-20 text-center">CARI MATERI DENGAN MUDAH <br /> SEKARANG JUGA</div>
 
-            {/* Search input section */}
             <div className="absolute w-full max-w-xl bottom-1/2 mb-20 z-10">
                 <div className="absolute transform translate-x-36 inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <Search size={18} className="text-gray-500" />
@@ -36,7 +34,6 @@ const MainSection = () => {
                 />
             </div>
 
-            {/* Images section */}
             <div className="flex justify-between items-end w-full absolute bottom-20 z-0">
                 <img
                     src={smartphone}
@@ -44,6 +41,8 @@ const MainSection = () => {
                     width={300}
                     className="-ml-16"
                     data-aos="fade-right"
+                    data-aos-offset="0"
+                    data-aos-threshold="0.1"
                 />
                 <img
                     src={manandwomantalking}
@@ -51,6 +50,8 @@ const MainSection = () => {
                     width={650}
                     className="mx-auto"
                     data-aos="fade-up"
+                    data-aos-offset="0"
+                    data-aos-threshold="0.1"
                 />
                 <img
                     src={book}
@@ -58,6 +59,8 @@ const MainSection = () => {
                     width={380}
                     className="-mr-32"
                     data-aos="fade-left"
+                    data-aos-offset="0"
+                    data-aos-threshold="0.1"
                 />
                 <img
                     src={light2}
@@ -65,6 +68,8 @@ const MainSection = () => {
                     width={700}
                     className="absolute bottom-8 -left-36 z-0"
                     data-aos="fade-up"
+                    data-aos-offset="0"
+                    data-aos-threshold="0.1"
                 />
                 <img
                     src={light}
@@ -72,6 +77,8 @@ const MainSection = () => {
                     width={600}
                     className="absolute bottom-8 right-0 z-0"
                     data-aos="fade-up"
+                    data-aos-offset="0"
+                    data-aos-threshold="0.1"
                 />
             </div>
         </div>
