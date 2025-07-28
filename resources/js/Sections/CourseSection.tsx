@@ -71,7 +71,6 @@ const CourseSection = () => {
     ];
 
     const [visibleCount, setVisibleCount] = useState(3);
-    const [isCollapsing, setIsCollapsing] = useState(false);
     const sectionRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -83,20 +82,18 @@ const CourseSection = () => {
         });
     }, []);
 
-    const loadMore = () => {
-        const currentCount = visibleCount;
-        const newCount = Math.min(currentCount + 3, majors.length);
-        setVisibleCount(newCount);
+    const toggleItems = () => {
+        if (visibleCount >= majors.length) {
+            // Jika semua sudah muncul, sembunyikan kembali ke 3
+            setVisibleCount(3);
+        } else {
+            // Tampilkan lebih banyak
+            const newCount = Math.min(visibleCount + 3, majors.length);
+            setVisibleCount(newCount);
+        }
     };
 
-    const collapseAll = () => {
-        setIsCollapsing(true);
-        // Setelah animasi collapse selesai, reset ke 3 item
-        setTimeout(() => {
-            setVisibleCount(3);
-            setIsCollapsing(false);
-        }, 600); // Sesuaikan dengan durasi animasi
-    };
+    const isAllVisible = visibleCount >= majors.length;
 
     return (
         <div
@@ -126,21 +123,13 @@ const CourseSection = () => {
                                     opacity: 1,
                                     y: 0,
                                     height: "auto",
-                                    transition: {
-                                        duration: 0.5,
-                                        ease: "easeOut",
-                                    },
                                 }}
                                 exit={{
                                     opacity: 0,
                                     y: -20,
                                     height: 0,
-                                    transition: {
-                                        duration: 0.5,
-                                        ease: "easeIn",
-                                    },
                                 }}
-                                transition={{ duration: 0.5 }}
+                                transition={{ duration: 0.5, ease: "easeOut" }}
                                 layout
                             >
                                 <motion.button
@@ -153,7 +142,6 @@ const CourseSection = () => {
                                 >
                                     <div className="absolute -top-4 -right-4 w-20 h-20 bg-white bg-opacity-10 rounded-full"></div>
                                     <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-white bg-opacity-5 rounded-full"></div>
-
                                     <div className="relative z-10 flex flex-col items-center text-center">
                                         <motion.div
                                             className="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-4"
@@ -176,71 +164,59 @@ const CourseSection = () => {
                 </AnimatePresence>
             </div>
 
-            {/* Tombol Load More */}
-            {visibleCount < majors.length && !isCollapsing && (
-                <motion.button
-                    onClick={loadMore}
-                    className="mt-8 relative inline-flex items-center justify-center px-6 py-3 font-medium text-gray-600 bg-white rounded-full cursor-pointer group transition-all duration-300"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    data-aos="fade-up"
-                >
-                    <div className="absolute inset-0 rounded-full border-2 border-gray-300 group-hover:border-transparent transition-all duration-300"></div>
-                    <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-blue-400 group-hover:shadow-[0_0_15px_3px_rgba(59,130,246,0.5)] opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-                    <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-purple-400 group-hover:shadow-[0_0_25px_5px_rgba(147,51,234,0.3)] opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100"></div>
-                    <span className="relative flex items-center gap-2 z-10">
-                        <span>Load More</span>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="transition-transform duration-300 group-hover:rotate-90"
-                        >
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                    </span>
-                </motion.button>
-            )}
+            {/* Tombol Dinamis: Load More / Collapse dengan Ikon + / - */}
+            <motion.button
+                onClick={toggleItems}
+                className={`mt-8 relative inline-flex items-center justify-center px-6 py-3 font-medium rounded-full cursor-pointer group transition-all duration-300 ${
+                    isAllVisible
+                        ? "text-white bg-gray-700"
+                        : "text-gray-600 bg-white"
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                data-aos="fade-up"
+            >
+                {/* Border dan Efek */}
+                {!isAllVisible && (
+                    <>
+                        <div className="absolute inset-0 rounded-full border-2 border-gray-300 group-hover:border-transparent transition-all duration-300"></div>
+                        <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-blue-400 group-hover:shadow-[0_0_15px_3px_rgba(59,130,246,0.5)] opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+                        <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-purple-400 group-hover:shadow-[0_0_25px_5px_rgba(147,51,234,0.3)] opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100"></div>
+                    </>
+                )}
 
-            {/* Tombol Collapse */}
-            {visibleCount >= majors.length && (
-                <motion.button
-                    onClick={collapseAll}
-                    className="mt-8 relative inline-flex items-center justify-center px-6 py-3 font-medium text-white bg-gray-700 rounded-full cursor-pointer group transition-all duration-300"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    data-aos="fade-up"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20 }}
-                >
-                    <span className="relative flex items-center gap-2 z-10">
-                        <span>Collapse</span>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="transition-transform duration-300 group-hover:-rotate-90"
-                        >
-                            <line x1="12" y1="19" x2="12" y2="5"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                    </span>
-                </motion.button>
-            )}
+                <span className="relative flex items-center gap-2 z-10">
+                    <span>{isAllVisible ? "Collapse" : "Load More"}</span>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={`transition-transform duration-300 ${
+                            isAllVisible
+                                ? "group-hover:-rotate-90"
+                                : "group-hover:rotate-90"
+                        }`}
+                    >
+                        {/* Ikon berubah: + saat load more, - saat collapse */}
+                        {isAllVisible ? (
+                            // Hanya garis horizontal = ikon "-"
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        ) : (
+                            // Garis vertikal dan horizontal = ikon "+"
+                            <>
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                            </>
+                        )}
+                    </svg>
+                </span>
+            </motion.button>
         </div>
     );
 };

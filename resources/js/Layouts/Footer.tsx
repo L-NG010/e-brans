@@ -11,7 +11,7 @@ const Footer = () => {
                         <h3 className="text-lg font-bold text-gray-800 mb-4">
                             SMK Brantas Karangkates
                         </h3>
-                        <p className="text-gray-600 text-sm">
+                        <p className="text-gray-600 text-sm"> 
                             Memberikan pendidikan berkualitas untuk membentuk
                             generasi unggul dan siap menghadapi tantangan masa
                             depan.
