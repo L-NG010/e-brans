@@ -7,6 +7,7 @@ import Footer from "@/Layouts/Footer";
 import Materi from "@/Sections/Materi";
 import FirstSection from "@/Sections/FirstSection";
 import Perusahaan from "@/Sections/Perusahaan";
+import BottomSection from "@/Sections/BottomSection";
 
 export default function Main() {
     const { props } = usePage();
@@ -25,6 +26,7 @@ export default function Main() {
                 <CourseSection />
                 <Materi/>
                 <Perusahaan/>
+                <BottomSection/>
                 <Footer/>
             </div>
         </div>
