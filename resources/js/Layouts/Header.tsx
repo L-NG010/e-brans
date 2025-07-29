@@ -314,7 +314,7 @@ export default function Header(): JSX.Element {
 
                 {/* Bagian Login/Signup - akan mengecil saat collapsed */}
                 <nav
-                    className={`flex gap-2 md:gap-4 transition-all duration-500 ease-in-out ${isScrolled ? "scale-90" : "scale-100"
+                    className={`flex gap-2 md:gap-4 transition-all duration-500 ease-in-out ${isScrolled ? "scale-0" : "scale-100"
                         }`}
                 >
                     <button className="bg-white text-blue-600 px-3 py-1.5 md:px-4 md:py-2 rounded-md font-medium hover:bg-gray-100 transition text-sm whitespace-nowrap">
@@ -332,13 +332,13 @@ export default function Header(): JSX.Element {
                         src={LoginIcon}
                         alt="Login"
                         width={55}
-                        className="cursor-pointer shadow-md hover:scale-110 transition-transform"
+                        className="cursor-pointer hover:scale-110 transition-transform"
                     />
                     <img
                         src={ScrollToTop}
                         alt="Scroll to top"
                         width={55}
-                        className="cursor-pointer shadow-md hover:scale-110 transition-transform"
+                        className="cursor-pointer hover:scale-110 transition-transform"
                         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                     />
                 </div>
