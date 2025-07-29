@@ -7,10 +7,10 @@ import {
     HandCoins,
     LucideIcon,
 } from "lucide-react";
-import { div } from "framer-motion/client";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
-
-// Types (tetap sama)
+// Types
 interface CourseItem {
     name: string;
     href: string;
@@ -36,8 +36,8 @@ export default function Header(): JSX.Element {
     const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(
         null
     );
-    // State baru untuk melacak scroll
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
+    const [showButtons, setShowButtons] = useState<boolean>(false);
 
     const courses: CourseItem[] = [
         { name: "Web Design", href: "#", icon: Code },
@@ -53,14 +53,35 @@ export default function Header(): JSX.Element {
         { name: "Umum", href: "#" },
     ];
 
-    // --- Logika Scroll Handler ---
-    const handleScroll = useCallback(() => {
-        if (window.scrollY >= 100) {
-            setIsScrolled(true);
-        } else {
-            setIsScrolled(false);
-        }
+    // Debounce function
+    const debounce = (func: Function, wait: number) => {
+        let timeout: NodeJS.Timeout;
+        return (...args: any[]) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func(...args), wait);
+        };
+    };
+
+    // Inisialisasi AOS (hanya untuk dropdown)
+    useEffect(() => {
+        AOS.init({
+            duration: 600,
+            easing: "ease-in-out",
+            once: false,
+            anchorPlacement: "bottom-bottom",
+        });
+        AOS.refresh();
     }, []);
+
+    // Logika Scroll Handler
+    const handleScroll = useCallback(
+        debounce(() => {
+            const scrolled = window.scrollY >= 100;
+            setIsScrolled(scrolled);
+            setShowButtons(scrolled);
+        }, 100),
+        []
+    );
 
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
@@ -69,12 +90,12 @@ export default function Header(): JSX.Element {
         };
     }, [handleScroll]);
 
-    // Handle click toggle (tetap sama)
+    // Handle click toggle
     const handleDropdownClick = (dropdownName: DropdownType): void => {
         setOpenDropdown(openDropdown === dropdownName ? null : dropdownName);
     };
 
-    // Handle mouse enter with delay (tetap sama)
+    // Handle mouse enter with delay
     const handleMouseEnter = (dropdownName: DropdownType): void => {
         if (hoverTimeout) {
             clearTimeout(hoverTimeout);
@@ -82,7 +103,7 @@ export default function Header(): JSX.Element {
         setOpenDropdown(dropdownName);
     };
 
-    // Handle mouse leave with delay (tetap sama)
+    // Handle mouse leave with delay
     const handleMouseLeave = (): void => {
         const timeout = setTimeout(() => {
             setOpenDropdown(null);
@@ -90,7 +111,7 @@ export default function Header(): JSX.Element {
         setHoverTimeout(timeout);
     };
 
-    // Handle dropdown content hover (prevent closing) (tetap sama)
+    // Handle dropdown content hover (prevent closing)
     const handleDropdownHover = (): void => {
         if (hoverTimeout) {
             clearTimeout(hoverTimeout);
@@ -98,7 +119,7 @@ export default function Header(): JSX.Element {
         }
     };
 
-    // Close dropdown when clicking outside (tetap sama)
+    // Close dropdown when clicking outside
     useEffect(() => {
         const handleClickOutside = (event: Event): void => {
             const target = event.target as Element;
@@ -117,10 +138,13 @@ export default function Header(): JSX.Element {
         onMouseLeave,
     }: DropdownMenuProps): JSX.Element => (
         <div
-            className={`absolute bg-white shadow-lg rounded-lg mt-2 w-48 z-10 border border-gray-100 pt-1 pb-1 transition-all duration-200 ${isOpen
-                ? "opacity-100 visible translate-y-0"
-                : "opacity-0 invisible -translate-y-2"
-                }`}
+            className={`absolute bg-white shadow-lg rounded-lg mt-2 w-48 z-10 border border-gray-100 pt-1 pb-1 transition-all duration-200 ${
+                isOpen
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible -translate-y-2"
+            }`}
+            data-aos={isOpen ? "fade-down" : ""}
+            data-aos-duration="200"
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
@@ -130,53 +154,48 @@ export default function Header(): JSX.Element {
 
     return (
         <>
-            {/* Modifikasi class header untuk collapse, blur, dan animasi */}
             <header
-                className={`bg-white/90 backdrop-blur-md px-6 flex items-center justify-between shadow-md fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${isScrolled
-                    ? "py-2 h-16" // State collapsed
-                    : "py-4 h-24" // State normal
-                    }`}
+                className={`bg-white/90 backdrop-blur-md px-6 flex items-center justify-between shadow-md fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+                    isScrolled ? "py-2 h-16" : "py-4 h-24"
+                }`}
             >
-
-                {/* Logo dan teks */}
                 <div className="flex items-center">
-                    {/* Logo tetap ukuran penuh */}
                     <img
                         src={logo}
                         alt="logo sekolah"
                         width={60}
                         height={60}
                         className="flex-shrink-0"
+                        onError={() =>
+                            console.error("Error loading logo image")
+                        }
                     />
-
-                    {/* Kontainer untuk teks yang akan di-collapse */}
                     <div
-                        className={`ms-2 flex flex-col transition-all duration-500 ease-in-out overflow-hidden ${isScrolled
-                            ? "max-w-[120px] opacity-100" // Hanya tampilkan SMK BRAKA
-                            : "max-w-xs opacity-100" // Tampilkan lengkap
-                            }`}
+                        className={`ms-2 flex flex-col transition-all duration-500 ease-in-out overflow-hidden ${
+                            isScrolled
+                                ? "max-w-[120px] opacity-100"
+                                : "max-w-xs opacity-100"
+                        }`}
                     >
-                        {/* SMK BRAKA - selalu ada */}
-                        <div className="text-xl  font-extrabold text-[#465159] leading-none whitespace-nowrap">
+                        <div className="text-xl font-extrabold text-[#465159] leading-none whitespace-nowrap">
                             SMK BRAKA
                         </div>
-                        {/* BRANTAS KARANGKATES - hilang saat collapsed */}
                         <span
-                            className={`text-[#888888] font-semibold leading-none transition-all duration-500 ease-in-out whitespace-nowrap ${isScrolled
-                                ? "max-h-0 opacity-0 mt-0" // Hilang dan tidak ambil ruang
-                                : "max-h-5 opacity-100 mt-1" // Muncul dengan sedikit margin
-                                }`}
+                            className={`text-[#888888] font-semibold leading-none transition-all duration-500 ease-in-out whitespace-nowrap ${
+                                isScrolled
+                                    ? "max-h-0 opacity-0 mt-0"
+                                    : "max-h-5 opacity-100 mt-1"
+                            }`}
                         >
                             BRANTAS KARANGKATES
                         </span>
                     </div>
-
-                    {/* Bagian menu dan search - akan hilang saat collapsed */}
                     <div
-                        className={`ms-8 flex items-center gap-4 transition-all duration-500 ease-in-out ${isScrolled
-                            ? "opacity-0 w-0 overflow-hidden ml-0"
-                            : "opacity-100 w-auto ml-8"
-                            }`}
+                        className={`ms-8 flex items-center gap-4 transition-all duration-500 ease-in-out ${
+                            isScrolled
+                                ? "opacity-0 w-0 overflow-hidden ml-0"
+                                : "opacity-100 w-auto ml-8"
+                        }`}
                     >
                         <div className="relative w-64">
                             <input
@@ -189,7 +208,6 @@ export default function Header(): JSX.Element {
                             </button>
                         </div>
                         <div className="flex items-center gap-4">
-                            {/* Dropdown menus (Telusuri Kursus, dll.) - Kode tetap sama, hanya dibungkus dalam div yang collapsible */}
                             <div className="relative dropdown-container">
                                 <button
                                     className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition font-medium text-sm whitespace-nowrap"
@@ -204,10 +222,11 @@ export default function Header(): JSX.Element {
                                     Telusuri Kursus
                                     <ChevronDown
                                         size={16}
-                                        className={`transition-transform duration-200 ${openDropdown === "courses"
-                                            ? "rotate-180"
-                                            : ""
-                                            }`}
+                                        className={`transition-transform duration-200 ${
+                                            openDropdown === "courses"
+                                                ? "rotate-180"
+                                                : ""
+                                        }`}
                                     />
                                 </button>
                                 <DropdownMenu
@@ -248,10 +267,11 @@ export default function Header(): JSX.Element {
                                     Klaim Sertifikat Anda
                                     <ChevronDown
                                         size={16}
-                                        className={`transition-transform duration-200 ${openDropdown === "certificate"
-                                            ? "rotate-180"
-                                            : ""
-                                            }`}
+                                        className={`transition-transform duration-200 ${
+                                            openDropdown === "certificate"
+                                                ? "rotate-180"
+                                                : ""
+                                        }`}
                                     />
                                 </button>
                                 <DropdownMenu
@@ -284,10 +304,11 @@ export default function Header(): JSX.Element {
                                     Temukan Tugas Anda
                                     <ChevronDown
                                         size={16}
-                                        className={`transition-transform duration-200 ${openDropdown === "task"
-                                            ? "rotate-180"
-                                            : ""
-                                            }`}
+                                        className={`transition-transform duration-200 ${
+                                            openDropdown === "task"
+                                                ? "rotate-180"
+                                                : ""
+                                        }`}
                                     />
                                 </button>
                                 <DropdownMenu
@@ -311,11 +332,10 @@ export default function Header(): JSX.Element {
                         </div>
                     </div>
                 </div>
-
-                {/* Bagian Login/Signup - akan mengecil saat collapsed */}
                 <nav
-                    className={`flex gap-2 md:gap-4 transition-all duration-500 ease-in-out ${isScrolled ? "scale-0" : "scale-100"
-                        }`}
+                    className={`flex gap-2 md:gap-4 transition-all duration-500 ease-in-out ${
+                        isScrolled ? "scale-90" : "scale-100"
+                    }`}
                 >
                     <button className="bg-white text-blue-600 px-3 py-1.5 md:px-4 md:py-2 rounded-md font-medium hover:bg-gray-100 transition text-sm whitespace-nowrap">
                         Login
@@ -326,23 +346,33 @@ export default function Header(): JSX.Element {
                 </nav>
             </header>
 
-            {isScrolled && (
-                <div className="fixed bottom-10 right-10 flex flex-col items-center gap-3 z-50">
-                    <img
-                        src={LoginIcon}
-                        alt="Login"
-                        width={55}
-                        className="cursor-pointer hover:scale-110 transition-transform"
-                    />
-                    <img
-                        src={ScrollToTop}
-                        alt="Scroll to top"
-                        width={55}
-                        className="cursor-pointer hover:scale-110 transition-transform"
-                        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                    />
-                </div>
-            )}
+            <div
+                className={`fixed bottom-10 right-10 flex flex-col items-center gap-3 z-50 transition-all duration-1000 ease-in-out ${
+                    showButtons
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-10 pointer-events-none"
+                }`}
+            >
+                <img
+                    src={LoginIcon}
+                    alt="Login"
+                    width={55}
+                    className="cursor-pointer shadow-md hover:scale-110 transition-transform"
+                    onError={() => console.error("Error loading Login icon")}
+                />
+                <img
+                    src={ScrollToTop}
+                    alt="Scroll to top"
+                    width={55}
+                    className="cursor-pointer shadow-md hover:scale-110 transition-transform"
+                    onError={() =>
+                        console.error("Error loading Scroll to Top icon")
+                    }
+                    onClick={() =>
+                        window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
+                />
+            </div>
         </>
     );
 }
