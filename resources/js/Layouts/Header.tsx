@@ -38,6 +38,7 @@ export default function Header(): JSX.Element {
     );
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
     const [showButtons, setShowButtons] = useState<boolean>(false);
+    const [showLoginPopup, setShowLoginPopup] = useState<boolean>(false);
 
     const courses: CourseItem[] = [
         { name: "Web Design", href: "#", icon: Code },
@@ -62,7 +63,7 @@ export default function Header(): JSX.Element {
         };
     };
 
-    // Inisialisasi AOS (hanya untuk dropdown)
+    // Inisialisasi AOS
     useEffect(() => {
         AOS.init({
             duration: 600,
@@ -111,7 +112,7 @@ export default function Header(): JSX.Element {
         setHoverTimeout(timeout);
     };
 
-    // Handle dropdown content hover (prevent closing)
+    // Handle dropdown content hover
     const handleDropdownHover = (): void => {
         if (hoverTimeout) {
             clearTimeout(hoverTimeout);
@@ -130,6 +131,11 @@ export default function Header(): JSX.Element {
         document.addEventListener("click", handleClickOutside);
         return () => document.removeEventListener("click", handleClickOutside);
     }, []);
+
+    // Toggle login popup
+    const handleLoginClick = () => {
+        setShowLoginPopup(!showLoginPopup);
+    };
 
     const DropdownMenu = ({
         isOpen,
@@ -337,7 +343,10 @@ export default function Header(): JSX.Element {
                         isScrolled ? "scale-90" : "scale-100"
                     }`}
                 >
-                    <button className="bg-white text-blue-600 px-3 py-1.5 md:px-4 md:py-2 rounded-md font-medium hover:bg-gray-100 transition text-sm whitespace-nowrap">
+                    <button
+                        className="bg-white text-blue-600 px-3 py-1.5 md:px-4 md:py-2 rounded-md font-medium hover:bg-gray-100 transition text-sm whitespace-nowrap"
+                        onClick={handleLoginClick}
+                    >
                         Login
                     </button>
                     <button className="bg-blue-500 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md font-medium hover:bg-blue-600 transition text-sm whitespace-nowrap">
@@ -345,6 +354,60 @@ export default function Header(): JSX.Element {
                     </button>
                 </nav>
             </header>
+
+            {showLoginPopup && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-lg shadow-lg p-6 w-80">
+                        <h2 className="text-xl font-bold text-blue-600 mb-4">
+                            Welcome
+                        </h2>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Email
+                                </label>
+                                <input
+                                    type="email"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                                    placeholder="Email"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Username
+                                </label>
+                                <input
+                                    type="text"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                                    placeholder="Username"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Password
+                                </label>
+                                <input
+                                    type="password"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                                    placeholder="Password"
+                                />
+                            </div>
+                            <button className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition">
+                                Buat Akun
+                            </button>
+                            <p className="text-center text-orange-500 text-sm mt-2">
+                                Sudah Punya Akun? Login
+                            </p>
+                        </div>
+                        <button
+                            className="mt-4 text-gray-500 hover:text-gray-700 absolute top-2 right-2"
+                            onClick={handleLoginClick}
+                        >
+                            ✕
+                        </button>
+                    </div>
+                </div>
+            )}
 
             <div
                 className={`fixed bottom-10 right-10 flex flex-col items-center gap-3 z-50 transition-all duration-1000 ease-in-out ${
@@ -358,6 +421,7 @@ export default function Header(): JSX.Element {
                     alt="Login"
                     width={55}
                     className="cursor-pointer shadow-md hover:scale-110 transition-transform"
+                    onClick={handleLoginClick}
                     onError={() => console.error("Error loading Login icon")}
                 />
                 <img
