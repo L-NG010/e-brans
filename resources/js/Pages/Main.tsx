@@ -1,13 +1,13 @@
-import AkreditasSection from "@/Sections/AkreditasSection";
-import MainSection from "@/Sections/MainSection";
+import AkreditasSection from "@/Sections/main/AkreditasSection";
+import MainSection from "@/Sections/main/MainSection";
 import Header from "@/Layouts/Header";
-import CourseSection from "@/Sections/CourseSection";
+import CourseSection from "@/Sections/main/CourseSection";
 import { usePage } from "@inertiajs/react";
 import Footer from "@/Layouts/Footer";
-import Materi from "@/Sections/Materi";
-import FirstSection from "@/Sections/FirstSection";
-import Perusahaan from "@/Sections/Perusahaan";
-import BottomSection from "@/Sections/BottomSection";
+import Materi from "@/Sections/main/Materi";
+import FirstSection from "@/Sections/main/FirstSection";
+import Perusahaan from "@/Sections/main/Perusahaan";
+import BottomSection from "@/Sections/main/BottomSection";
 
 export default function Main() {
     const { props } = usePage();
