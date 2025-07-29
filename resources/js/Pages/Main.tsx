@@ -6,6 +6,7 @@ import { usePage } from "@inertiajs/react";
 import Footer from "@/Layouts/Footer";
 import Materi from "@/Sections/Materi";
 import FirstSection from "@/Sections/FirstSection";
+import Perusahaan from "@/Sections/Perusahaan";
 
 export default function Main() {
     const { props } = usePage();
@@ -23,6 +24,7 @@ export default function Main() {
                 <AkreditasSection />
                 <CourseSection />
                 <Materi/>
+                <Perusahaan/>
                 <Footer/>
             </div>
         </div>
