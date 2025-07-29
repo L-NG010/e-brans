@@ -7,6 +7,8 @@ import {
     HandCoins,
     LucideIcon,
 } from "lucide-react";
+import { div } from "framer-motion/client";
+
 
 // Types (tetap sama)
 interface CourseItem {
@@ -27,6 +29,8 @@ interface DropdownMenuProps {
 type DropdownType = "courses" | "certificate" | "task" | null;
 
 export default function Header(): JSX.Element {
+    const LoginIcon = "/assets/svg/login-icon.svg";
+    const ScrollToTop = "/assets/svg/scroll-to-top.svg";
     const logo: string = "/assets/img/smkbraka-icon.png";
     const [openDropdown, setOpenDropdown] = useState<DropdownType>(null);
     const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(
@@ -113,11 +117,10 @@ export default function Header(): JSX.Element {
         onMouseLeave,
     }: DropdownMenuProps): JSX.Element => (
         <div
-            className={`absolute bg-white shadow-lg rounded-lg mt-2 w-48 z-10 border border-gray-100 pt-1 pb-1 transition-all duration-200 ${
-                isOpen
-                    ? "opacity-100 visible translate-y-0"
-                    : "opacity-0 invisible -translate-y-2"
-            }`}
+            className={`absolute bg-white shadow-lg rounded-lg mt-2 w-48 z-10 border border-gray-100 pt-1 pb-1 transition-all duration-200 ${isOpen
+                ? "opacity-100 visible translate-y-0"
+                : "opacity-0 invisible -translate-y-2"
+                }`}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
@@ -129,12 +132,13 @@ export default function Header(): JSX.Element {
         <>
             {/* Modifikasi class header untuk collapse, blur, dan animasi */}
             <header
-                className={`bg-white/90 backdrop-blur-md px-6 flex items-center justify-between shadow-md fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-                    isScrolled
-                        ? "py-2 h-16" // State collapsed
-                        : "py-4 h-24" // State normal
-                }`}
+                className={`bg-white/90 backdrop-blur-md px-6 flex items-center justify-between shadow-md fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${isScrolled
+                    ? "py-2 h-16" // State collapsed
+                    : "py-4 h-24" // State normal
+                    }`}
             >
+
+                {/* Logo dan teks */}
                 <div className="flex items-center">
                     {/* Logo tetap ukuran penuh */}
                     <img
@@ -147,11 +151,10 @@ export default function Header(): JSX.Element {
 
                     {/* Kontainer untuk teks yang akan di-collapse */}
                     <div
-                        className={`ms-2 flex flex-col transition-all duration-500 ease-in-out overflow-hidden ${
-                            isScrolled
-                                ? "max-w-[120px] opacity-100" // Hanya tampilkan SMK BRAKA
-                                : "max-w-xs opacity-100" // Tampilkan lengkap
-                        }`}
+                        className={`ms-2 flex flex-col transition-all duration-500 ease-in-out overflow-hidden ${isScrolled
+                            ? "max-w-[120px] opacity-100" // Hanya tampilkan SMK BRAKA
+                            : "max-w-xs opacity-100" // Tampilkan lengkap
+                            }`}
                     >
                         {/* SMK BRAKA - selalu ada */}
                         <div className="text-xl  font-extrabold text-[#465159] leading-none whitespace-nowrap">
@@ -159,11 +162,10 @@ export default function Header(): JSX.Element {
                         </div>
                         {/* BRANTAS KARANGKATES - hilang saat collapsed */}
                         <span
-                            className={`text-[#888888] font-semibold leading-none transition-all duration-500 ease-in-out whitespace-nowrap ${
-                                isScrolled
-                                    ? "max-h-0 opacity-0 mt-0" // Hilang dan tidak ambil ruang
-                                    : "max-h-5 opacity-100 mt-1" // Muncul dengan sedikit margin
-                            }`}
+                            className={`text-[#888888] font-semibold leading-none transition-all duration-500 ease-in-out whitespace-nowrap ${isScrolled
+                                ? "max-h-0 opacity-0 mt-0" // Hilang dan tidak ambil ruang
+                                : "max-h-5 opacity-100 mt-1" // Muncul dengan sedikit margin
+                                }`}
                         >
                             BRANTAS KARANGKATES
                         </span>
@@ -171,11 +173,10 @@ export default function Header(): JSX.Element {
 
                     {/* Bagian menu dan search - akan hilang saat collapsed */}
                     <div
-                        className={`ms-8 flex items-center gap-4 transition-all duration-500 ease-in-out ${
-                            isScrolled
-                                ? "opacity-0 w-0 overflow-hidden ml-0"
-                                : "opacity-100 w-auto ml-8"
-                        }`}
+                        className={`ms-8 flex items-center gap-4 transition-all duration-500 ease-in-out ${isScrolled
+                            ? "opacity-0 w-0 overflow-hidden ml-0"
+                            : "opacity-100 w-auto ml-8"
+                            }`}
                     >
                         <div className="relative w-64">
                             <input
@@ -203,11 +204,10 @@ export default function Header(): JSX.Element {
                                     Telusuri Kursus
                                     <ChevronDown
                                         size={16}
-                                        className={`transition-transform duration-200 ${
-                                            openDropdown === "courses"
-                                                ? "rotate-180"
-                                                : ""
-                                        }`}
+                                        className={`transition-transform duration-200 ${openDropdown === "courses"
+                                            ? "rotate-180"
+                                            : ""
+                                            }`}
                                     />
                                 </button>
                                 <DropdownMenu
@@ -248,11 +248,10 @@ export default function Header(): JSX.Element {
                                     Klaim Sertifikat Anda
                                     <ChevronDown
                                         size={16}
-                                        className={`transition-transform duration-200 ${
-                                            openDropdown === "certificate"
-                                                ? "rotate-180"
-                                                : ""
-                                        }`}
+                                        className={`transition-transform duration-200 ${openDropdown === "certificate"
+                                            ? "rotate-180"
+                                            : ""
+                                            }`}
                                     />
                                 </button>
                                 <DropdownMenu
@@ -285,11 +284,10 @@ export default function Header(): JSX.Element {
                                     Temukan Tugas Anda
                                     <ChevronDown
                                         size={16}
-                                        className={`transition-transform duration-200 ${
-                                            openDropdown === "task"
-                                                ? "rotate-180"
-                                                : ""
-                                        }`}
+                                        className={`transition-transform duration-200 ${openDropdown === "task"
+                                            ? "rotate-180"
+                                            : ""
+                                            }`}
                                     />
                                 </button>
                                 <DropdownMenu
@@ -316,9 +314,8 @@ export default function Header(): JSX.Element {
 
                 {/* Bagian Login/Signup - akan mengecil saat collapsed */}
                 <nav
-                    className={`flex gap-2 md:gap-4 transition-all duration-500 ease-in-out ${
-                        isScrolled ? "scale-90" : "scale-100"
-                    }`}
+                    className={`flex gap-2 md:gap-4 transition-all duration-500 ease-in-out ${isScrolled ? "scale-90" : "scale-100"
+                        }`}
                 >
                     <button className="bg-white text-blue-600 px-3 py-1.5 md:px-4 md:py-2 rounded-md font-medium hover:bg-gray-100 transition text-sm whitespace-nowrap">
                         Login
@@ -328,6 +325,24 @@ export default function Header(): JSX.Element {
                     </button>
                 </nav>
             </header>
+
+            {isScrolled && (
+                <div className="fixed bottom-10 right-10 flex flex-col items-center gap-3 z-50">
+                    <img
+                        src={LoginIcon}
+                        alt="Login"
+                        width={55}
+                        className="cursor-pointer shadow-md hover:scale-110 transition-transform"
+                    />
+                    <img
+                        src={ScrollToTop}
+                        alt="Scroll to top"
+                        width={55}
+                        className="cursor-pointer shadow-md hover:scale-110 transition-transform"
+                        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                    />
+                </div>
+            )}
         </>
     );
 }
