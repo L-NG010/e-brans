@@ -11,7 +11,7 @@ const Footer = () => {
                         <h3 className="text-lg font-bold text-gray-800 mb-4">
                             SMK Brantas Karangkates
                         </h3>
-                        <p className="text-gray-600 text-sm"> 
+                        <p className="text-gray-600 text-sm">
                             Memberikan pendidikan berkualitas untuk membentuk
                             generasi unggul dan siap menghadapi tantangan masa
                             depan.
@@ -107,7 +107,7 @@ const Footer = () => {
                             </a>
                         </div>
                         {/* Logo Placeholder */}
-                        <div className="mt-8 w-24 h-10 bg-gray-300 rounded flex items-center justify-center text-xs text-gray-500">
+                        <div className="mt-8 w-24 h-10 flex items-center justify-center text-xs text-gray-500">
                             <img src={logo} alt="logo sekolah" />
                         </div>
                     </div>
