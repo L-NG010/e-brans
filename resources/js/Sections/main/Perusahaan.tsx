@@ -17,20 +17,20 @@ const Perusahaan = () => {
 
   useEffect(() => {
     controls.start({
-      x: "-50%", 
+      x: "-50%",
       transition: {
         x: {
-          repeat: Infinity, 
+          repeat: Infinity,
           repeatType: "loop",
-          duration: 20, 
-          ease: "linear", 
+          duration: 20,
+          ease: "linear",
         },
       },
     });
   }, [controls]);
 // bg-[#f1f0f0]
   return (
-    <div className="relative flex flex-col items-center mt-20 px-4 py-16  bg-gray-100  min-h-[40vh]">
+    <div className="relative flex flex-col items-center mt-20  py-16  bg-gray-100  min-h-[40vh]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -42,7 +42,7 @@ const Perusahaan = () => {
         </h2>
       </motion.div>
 
-      <div className="w-full max-w-7xl overflow-hidden">
+      <div className="w-full max-w-full overflow-hidden">
         <motion.div
           className="flex items-center gap-12 px-6 py-4"
           animate={controls}
