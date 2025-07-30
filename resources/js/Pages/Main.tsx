@@ -10,8 +10,6 @@ import Perusahaan from "@/Sections/main/Perusahaan";
 import BottomSection from "@/Sections/main/BottomSection";
 
 export default function Main() {
-    const { props } = usePage();
-    const { materi } = props;
 
     return (
         <div className="relative">
