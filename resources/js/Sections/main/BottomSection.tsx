@@ -75,9 +75,12 @@ export default function BottomSection() {
           <button
             onClick={handlePrev}
             disabled={page === 0}
-            className="w-10 h-10 border border-black rounded-full flex items-center justify-center disabled:opacity-50"
+            className="w-16 h-16 border  rounded-full flex items-center justify-center disabled:opacity-50"
           >
-            &#8592;
+            <svg xmlns="http://www.w3.org/2000/svg" width="82" height="82" viewBox="0 0 82 82" fill="none">
+<circle cx="41" cy="41" r="40.5" transform="matrix(-1 0 0 1 82 0)" stroke="black"/>
+<path d="M39.0324 41.0002L46.5764 33.4562L44.2804 31.1602L34.4404 41.0002L44.2804 50.8402L46.5764 48.5442L39.0324 41.0002Z" fill="black"/>
+</svg>
           </button>
         </div>
 
@@ -100,9 +103,12 @@ export default function BottomSection() {
           <button
             onClick={handleNext}
             disabled={page === totalPages - 1}
-            className="w-10 h-10 border border-black rounded-full flex items-center justify-center disabled:opacity-50"
+            className="w-16 h-16 border  rounded-full flex items-center justify-center disabled:opacity-50"
           >
-            &#8594;
+            <svg xmlns="http://www.w3.org/2000/svg" width="82" height="82" viewBox="0 0 82 82" fill="none">
+<circle cx="41" cy="41" r="40.5" stroke="black"/>
+<path d="M42.9676 41.0002L35.4236 33.4562L37.7196 31.1602L47.5596 41.0002L37.7196 50.8402L35.4236 48.5442L42.9676 41.0002Z" fill="black"/>
+</svg>
           </button>
         </div>
       </div>
