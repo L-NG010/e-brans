@@ -3,12 +3,12 @@ import { useEffect } from "react";
 
 const Perusahaan = () => {
   const images = [
-    "/assets/img/suzuki.png",
-    "/assets/img/pama.png",
-    "/assets/img/utschool.png",
-    "/assets/img/aman.png",
-    "/assets/img/ubig.png",
-    "/assets/img/alatberat.png",
+    "assets/img/perusahaan/suzuki.png",
+    "assets/img/perusahaan/pama.png",
+    "assets/img/perusahaan/utschool.png",
+    "assets/img/perusahaan/amman.png",
+    "assets/img/perusahaan/ubig.png",
+    "assets/img/perusahaan/alatbrat.png",
   ];
 
   const duplicatedImages = [...images, ...images];
