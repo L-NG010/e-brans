@@ -1,14 +1,5 @@
 import { useState, useEffect, ReactNode, useCallback } from "react";
-import {
-    Search,
-    ChevronDown,
-    Code,
-    Smartphone,
-    HandCoins,
-    LucideIcon,
-} from "lucide-react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import { Search, ChevronDown, Code, Smartphone, HandCoins, LucideIcon } from "lucide-react";
 
 // Types
 interface CourseItem {
@@ -37,7 +28,7 @@ export default function Header(): JSX.Element {
         null
     );
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
-    const [showButtons, setShowButtons] = useState<boolean>(false);
+    const [showSearch, setShowSearch] = useState<boolean>(true);
     const [showLoginPopup, setShowLoginPopup] = useState<boolean>(false);
 
     const courses: CourseItem[] = [
@@ -54,35 +45,28 @@ export default function Header(): JSX.Element {
         { name: "Umum", href: "#" },
     ];
 
-    // Debounce function
-    const debounce = (func: Function, wait: number) => {
-        let timeout: NodeJS.Timeout;
-        return (...args: any[]) => {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func(...args), wait);
-        };
-    };
-
-    // Inisialisasi AOS
-    useEffect(() => {
-        AOS.init({
-            duration: 600,
-            easing: "ease-in-out",
-            once: false,
-            anchorPlacement: "bottom-bottom",
-        });
-        AOS.refresh();
+    // Logika Scroll Handler
+    const handleScroll = useCallback(() => {
+        if (window.scrollY >= 100) {
+            setIsScrolled(true);
+            setShowSearch(false);
+        } else {
+            setIsScrolled(false);
+        }
     }, []);
 
-    // Logika Scroll Handler
-    const handleScroll = useCallback(
-        debounce(() => {
-            const scrolled = window.scrollY >= 100;
-            setIsScrolled(scrolled);
-            setShowButtons(scrolled);
-        }, 100),
-        []
-    );
+    // Efek untuk menunda munculnya search bar saat kembali ke atas
+    useEffect(() => {
+        let timeout: NodeJS.Timeout | null = null;
+        if (!isScrolled) {
+            timeout = setTimeout(() => {
+                setShowSearch(true);
+            }, 300); // Kurangi delay
+        }
+        return () => {
+            if (timeout) clearTimeout(timeout);
+        };
+    }, [isScrolled]);
 
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
@@ -93,26 +77,35 @@ export default function Header(): JSX.Element {
 
     // Handle click toggle
     const handleDropdownClick = (dropdownName: DropdownType): void => {
+        // Clear any existing timeout
+        if (hoverTimeout) {
+            clearTimeout(hoverTimeout);
+            setHoverTimeout(null);
+        }
         setOpenDropdown(openDropdown === dropdownName ? null : dropdownName);
     };
 
-    // Handle mouse enter with delay
+    // Handle mouse enter - langsung buka tanpa delay
     const handleMouseEnter = (dropdownName: DropdownType): void => {
         if (hoverTimeout) {
             clearTimeout(hoverTimeout);
+            setHoverTimeout(null);
         }
         setOpenDropdown(dropdownName);
     };
 
-    // Handle mouse leave with delay
+    // Handle mouse leave dengan delay yang lebih pendek
     const handleMouseLeave = (): void => {
+        if (hoverTimeout) {
+            clearTimeout(hoverTimeout);
+        }
         const timeout = setTimeout(() => {
             setOpenDropdown(null);
-        }, 300);
+        }, 200); // Kurangi delay ke 200ms
         setHoverTimeout(timeout);
     };
 
-    // Handle dropdown content hover
+    // Handle dropdown content hover - batalkan close timeout
     const handleDropdownHover = (): void => {
         if (hoverTimeout) {
             clearTimeout(hoverTimeout);
@@ -126,11 +119,25 @@ export default function Header(): JSX.Element {
             const target = event.target as Element;
             if (!target.closest(".dropdown-container")) {
                 setOpenDropdown(null);
+                // Clear timeout juga
+                if (hoverTimeout) {
+                    clearTimeout(hoverTimeout);
+                    setHoverTimeout(null);
+                }
             }
         };
         document.addEventListener("click", handleClickOutside);
         return () => document.removeEventListener("click", handleClickOutside);
-    }, []);
+    }, [hoverTimeout]);
+
+    // Clean up timeout on unmount
+    useEffect(() => {
+        return () => {
+            if (hoverTimeout) {
+                clearTimeout(hoverTimeout);
+            }
+        };
+    }, [hoverTimeout]);
 
     // Toggle login popup
     const handleLoginClick = () => {
@@ -144,13 +151,18 @@ export default function Header(): JSX.Element {
         onMouseLeave,
     }: DropdownMenuProps): JSX.Element => (
         <div
-            className={`absolute bg-white shadow-lg rounded-lg mt-2 w-48 z-10 border border-gray-100 pt-1 pb-1 transition-all duration-200 ${
+            className={`absolute bg-white shadow-lg rounded-lg mt-2 w-48 z-20 border border-gray-100 pt-1 pb-1 transition-all duration-200 ease-out ${
                 isOpen
-                    ? "opacity-100 visible translate-y-0"
-                    : "opacity-0 invisible -translate-y-2"
+                    ? "opacity-100 visible translate-y-0 scale-100"
+                    : "opacity-0 invisible -translate-y-1 scale-95"
             }`}
-            data-aos={isOpen ? "fade-down" : ""}
-            data-aos-duration="200"
+            style={{
+                transformOrigin: "top center",
+                // Pastikan dropdown tidak bergeser
+                position: "absolute",
+                top: "100%",
+                left: "0",
+            }}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
@@ -161,49 +173,43 @@ export default function Header(): JSX.Element {
     return (
         <>
             <header
-                className={`bg-white/90 backdrop-blur-md px-6 flex items-center justify-between shadow-md fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+                className={`bg-white/90 backdrop-blur-md px-6 flex items-center justify-center shadow-md fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
                     isScrolled ? "py-2 h-16" : "py-4 h-24"
                 }`}
             >
-                <div className="flex items-center">
-                    <img
-                        src={logo}
-                        alt="logo sekolah"
-                        width={60}
-                        height={60}
-                        className="flex-shrink-0"
-                        onError={() =>
-                            console.error("Error loading logo image")
-                        }
-                    />
-                    <div
-                        className={`ms-2 flex flex-col transition-all duration-500 ease-in-out overflow-hidden ${
-                            isScrolled
-                                ? "max-w-[120px] opacity-100"
-                                : "max-w-xs opacity-100"
-                        }`}
-                    >
-                        <div className="text-xl font-extrabold text-[#465159] leading-none whitespace-nowrap">
-                            SMK BRAKA
+                {/* Logo, teks, dan search - hilang saat di-scroll */}
+                <div
+                    className={`flex items-center w-full justify-between transition-all duration-300 ease-out ${
+                        isScrolled
+                            ? "opacity-0 pointer-events-none"
+                            : "opacity-100"
+                    }`}
+                >
+                    <div className="flex items-center">
+                        <img
+                            src={logo}
+                            alt="logo sekolah"
+                            width={60}
+                            height={60}
+                            className="flex-shrink-0"
+                        />
+                        <div className="ms-2 flex flex-col transition-all duration-300 ease-out overflow-hidden max-w-xs">
+                            <div className="text-xl font-extrabold text-[#465159] leading-none whitespace-nowrap">
+                                SMK BRAKA
+                            </div>
+                            <span className="text-[#888888] font-semibold leading-none max-h-5 mt-1 whitespace-nowrap">
+                                BRANTAS KARANGKATES
+                            </span>
                         </div>
-                        <span
-                            className={`text-[#888888] font-semibold leading-none transition-all duration-500 ease-in-out whitespace-nowrap ${
-                                isScrolled
-                                    ? "max-h-0 opacity-0 mt-0"
-                                    : "max-h-5 opacity-100 mt-1"
+                    </div>
+                    <div className="flex items-center gap-4 ms-8">
+                        <div
+                            className={`relative w-64 mr-8 transition-all duration-300 ease-out ${
+                                showSearch
+                                    ? "opacity-100 translate-x-0"
+                                    : "opacity-0 translate-x-4"
                             }`}
                         >
-                            BRANTAS KARANGKATES
-                        </span>
-                    </div>
-                    <div
-                        className={`ms-8 flex items-center gap-4 transition-all duration-500 ease-in-out ${
-                            isScrolled
-                                ? "opacity-0 w-0 overflow-hidden ml-0"
-                                : "opacity-100 w-auto ml-8"
-                        }`}
-                    >
-                        <div className="relative w-64">
                             <input
                                 type="text"
                                 placeholder="Cari sesuatu..."
@@ -213,151 +219,154 @@ export default function Header(): JSX.Element {
                                 <Search size={18} />
                             </button>
                         </div>
-                        <div className="flex items-center gap-4">
-                            <div className="relative dropdown-container">
-                                <button
-                                    className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition font-medium text-sm whitespace-nowrap"
-                                    onClick={() =>
-                                        handleDropdownClick("courses")
-                                    }
-                                    onMouseEnter={() =>
-                                        handleMouseEnter("courses")
-                                    }
-                                    onMouseLeave={handleMouseLeave}
-                                >
-                                    Telusuri Kursus
-                                    <ChevronDown
-                                        size={16}
-                                        className={`transition-transform duration-200 ${
-                                            openDropdown === "courses"
-                                                ? "rotate-180"
-                                                : ""
-                                        }`}
-                                    />
-                                </button>
-                                <DropdownMenu
-                                    isOpen={openDropdown === "courses"}
-                                    onMouseEnter={handleDropdownHover}
-                                    onMouseLeave={handleMouseLeave}
-                                >
-                                    {courses.map(
-                                        (
-                                            service: CourseItem,
-                                            index: number
-                                        ) => (
-                                            <a
-                                                key={index}
-                                                href={service.href}
-                                                className="px-4 py-2 text-sm hover:bg-blue-50 transition flex items-center"
-                                            >
-                                                <service.icon size={16} />
-                                                <span className="ms-2">
-                                                    {service.name}
-                                                </span>
-                                            </a>
-                                        )
-                                    )}
-                                </DropdownMenu>
-                            </div>
-                            <div className="relative dropdown-container">
-                                <button
-                                    className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition font-medium text-sm whitespace-nowrap"
-                                    onClick={() =>
-                                        handleDropdownClick("certificate")
-                                    }
-                                    onMouseEnter={() =>
-                                        handleMouseEnter("certificate")
-                                    }
-                                    onMouseLeave={handleMouseLeave}
-                                >
-                                    Klaim Sertifikat Anda
-                                    <ChevronDown
-                                        size={16}
-                                        className={`transition-transform duration-200 ${
-                                            openDropdown === "certificate"
-                                                ? "rotate-180"
-                                                : ""
-                                        }`}
-                                    />
-                                </button>
-                                <DropdownMenu
-                                    isOpen={openDropdown === "certificate"}
-                                    onMouseEnter={handleDropdownHover}
-                                    onMouseLeave={handleMouseLeave}
-                                >
-                                    {sertificate.map(
-                                        (service: MenuItem, index: number) => (
-                                            <a
-                                                key={index}
-                                                href={service.href}
-                                                className="block px-4 py-2 text-sm hover:bg-blue-50 transition"
-                                            >
-                                                {service.name}
-                                            </a>
-                                        )
-                                    )}
-                                </DropdownMenu>
-                            </div>
-                            <div className="relative dropdown-container">
-                                <button
-                                    className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition font-medium text-sm whitespace-nowrap"
-                                    onClick={() => handleDropdownClick("task")}
-                                    onMouseEnter={() =>
-                                        handleMouseEnter("task")
-                                    }
-                                    onMouseLeave={handleMouseLeave}
-                                >
-                                    Temukan Tugas Anda
-                                    <ChevronDown
-                                        size={16}
-                                        className={`transition-transform duration-200 ${
-                                            openDropdown === "task"
-                                                ? "rotate-180"
-                                                : ""
-                                        }`}
-                                    />
-                                </button>
-                                <DropdownMenu
-                                    isOpen={openDropdown === "task"}
-                                    onMouseEnter={handleDropdownHover}
-                                    onMouseLeave={handleMouseLeave}
-                                >
-                                    {task.map(
-                                        (service: MenuItem, index: number) => (
-                                            <a
-                                                key={index}
-                                                href={service.href}
-                                                className="block px-4 py-2 text-sm hover:bg-blue-50 transition"
-                                            >
-                                                {service.name}
-                                            </a>
-                                        )
-                                    )}
-                                </DropdownMenu>
-                            </div>
-                        </div>
                     </div>
                 </div>
+
+                {/* Navigasi dropdown - selalu terlihat dan di tengah saat di-scroll */}
+                <div
+                    className={`flex items-center gap-6 transition-all duration-300 ease-out ${
+                        isScrolled
+                            ? "absolute left-1/2 transform -translate-x-1/2"
+                            : ""
+                    }`}
+                >
+                    <div className="relative dropdown-container">
+                        <button
+                            className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-sm whitespace-nowrap py-2 px-1"
+                            onClick={() => handleDropdownClick("courses")}
+                            onMouseEnter={() => handleMouseEnter("courses")}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            Telusuri Kursus
+                            <ChevronDown
+                                size={16}
+                                className={`transition-transform duration-200 ease-out ${
+                                    openDropdown === "courses"
+                                        ? "rotate-180"
+                                        : "rotate-0"
+                                }`}
+                            />
+                        </button>
+                        <DropdownMenu
+                            isOpen={openDropdown === "courses"}
+                            onMouseEnter={handleDropdownHover}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            {courses.map(
+                                (service: CourseItem, index: number) => {
+                                    const IconComponent = service.icon;
+                                    return (
+                                        <a
+                                            key={index}
+                                            href={service.href}
+                                            className="px-4 py-2.5 text-sm hover:bg-blue-50 transition-colors duration-150 flex items-center "
+                                        >
+                                            <IconComponent size={16} />
+                                            <span className="ms-2">
+                                                {service.name}
+                                            </span>
+                                        </a>
+                                    );
+                                }
+                            )}
+                        </DropdownMenu>
+                    </div>
+
+                    <div className="relative dropdown-container">
+                        <button
+                            className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-sm whitespace-nowrap py-2 px-1"
+                            onClick={() => handleDropdownClick("certificate")}
+                            onMouseEnter={() => handleMouseEnter("certificate")}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            Klaim Sertifikat Anda
+                            <ChevronDown
+                                size={16}
+                                className={`transition-transform duration-200 ease-out ${
+                                    openDropdown === "certificate"
+                                        ? "rotate-180"
+                                        : "rotate-0"
+                                }`}
+                            />
+                        </button>
+                        <DropdownMenu
+                            isOpen={openDropdown === "certificate"}
+                            onMouseEnter={handleDropdownHover}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            {sertificate.map(
+                                (service: MenuItem, index: number) => (
+                                    <a
+                                        key={index}
+                                        href={service.href}
+                                        className="block px-4 py-2.5 text-sm hover:bg-blue-50 transition-colors duration-150"
+                                    >
+                                        {service.name}
+                                    </a>
+                                )
+                            )}
+                        </DropdownMenu>
+                    </div>
+
+                    <div className="relative dropdown-container">
+                        <button
+                            className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-sm whitespace-nowrap py-2 px-1"
+                            onClick={() => handleDropdownClick("task")}
+                            onMouseEnter={() => handleMouseEnter("task")}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            Temukan Tugas Anda
+                            <ChevronDown
+                                size={16}
+                                className={`transition-transform duration-200 ease-out ${
+                                    openDropdown === "task"
+                                        ? "rotate-180"
+                                        : "rotate-0"
+                                }`}
+                            />
+                        </button>
+                        <DropdownMenu
+                            isOpen={openDropdown === "task"}
+                            onMouseEnter={handleDropdownHover}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            {task.map((service: MenuItem, index: number) => (
+                                <a
+                                    key={index}
+                                    href={service.href}
+                                    className="block px-4 py-2.5 text-sm hover:bg-blue-50 transition-colors duration-150"
+                                >
+                                    {service.name}
+                                </a>
+                            ))}
+                        </DropdownMenu>
+                    </div>
+                </div>
+
+                {/* Login/Signup - hilang saat di-scroll */}
                 <nav
-                    className={`flex gap-2 md:gap-4 transition-all duration-500 ease-in-out ${
-                        isScrolled ? "scale-90" : "scale-100"
+                    className={`flex gap-2 md:gap-4 transition-all duration-300 ease-out ${
+                        isScrolled
+                            ? "opacity-0 pointer-events-none"
+                            : "opacity-100"
                     }`}
                 >
                     <button
-                        className="bg-white text-blue-600 px-3 py-1.5 md:px-4 md:py-2 rounded-md font-medium hover:bg-gray-100 transition text-sm whitespace-nowrap"
+                        className="bg-white text-blue-600 px-3 py-1.5 md:px-4 md:py-2 rounded-md font-medium hover:bg-gray-100 transition-colors duration-200 text-sm whitespace-nowrap"
                         onClick={handleLoginClick}
                     >
                         Login
                     </button>
-                    <button className="bg-blue-500 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md font-medium hover:bg-blue-600 transition text-sm whitespace-nowrap">
+                    <button className="bg-blue-500 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md font-medium hover:bg-blue-600 transition-colors duration-200 text-sm whitespace-nowrap">
                         Signup
                     </button>
                 </nav>
             </header>
 
+            {/* Login Popup */}
             {showLoginPopup && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg shadow-lg p-6 w-80">
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300">
+                    <div className="bg-white rounded-lg shadow-lg p-6 w-80 transform transition-transform duration-300 scale-100">
                         <h2 className="text-xl font-bold text-blue-600 mb-4">
                             Welcome
                         </h2>
@@ -368,7 +377,7 @@ export default function Header(): JSX.Element {
                                 </label>
                                 <input
                                     type="email"
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 px-3 py-2 border"
                                     placeholder="Email"
                                 />
                             </div>
@@ -378,7 +387,7 @@ export default function Header(): JSX.Element {
                                 </label>
                                 <input
                                     type="text"
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 px-3 py-2 border"
                                     placeholder="Username"
                                 />
                             </div>
@@ -388,11 +397,11 @@ export default function Header(): JSX.Element {
                                 </label>
                                 <input
                                     type="password"
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 px-3 py-2 border"
                                     placeholder="Password"
                                 />
                             </div>
-                            <button className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition">
+                            <button className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition-colors duration-200">
                                 Buat Akun
                             </button>
                             <p className="text-center text-orange-500 text-sm mt-2">
@@ -400,7 +409,7 @@ export default function Header(): JSX.Element {
                             </p>
                         </div>
                         <button
-                            className="mt-4 text-gray-500 hover:text-gray-700 absolute top-2 right-2"
+                            className="mt-4 text-gray-500 hover:text-gray-700 absolute top-2 right-2 text-xl font-bold w-8 h-8 flex items-center justify-center"
                             onClick={handleLoginClick}
                         >
                             ✕
@@ -409,34 +418,24 @@ export default function Header(): JSX.Element {
                 </div>
             )}
 
-            <div
-                className={`fixed bottom-10 right-10 flex flex-col items-center gap-3 z-50 transition-all duration-1000 ease-in-out ${
-                    showButtons
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-10 pointer-events-none"
-                }`}
-            >
-                <img
-                    src={LoginIcon}
-                    alt="Login"
-                    width={55}
-                    className="cursor-pointer shadow-md hover:scale-110 transition-transform"
-                    onClick={handleLoginClick}
-                    onError={() => console.error("Error loading Login icon")}
-                />
-                <img
-                    src={ScrollToTop}
-                    alt="Scroll to top"
-                    width={55}
-                    className="cursor-pointer shadow-md hover:scale-110 transition-transform"
-                    onError={() =>
-                        console.error("Error loading Scroll to Top icon")
-                    }
-                    onClick={() =>
-                        window.scrollTo({ top: 0, behavior: "smooth" })
-                    }
-                />
-            </div>
+            {isScrolled && (
+                <div className="fixed bottom-10 right-10 flex flex-col items-center gap-3 z-50">
+                    <div
+                        className="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-200 shadow-lg"
+                        onClick={handleLoginClick}
+                    >
+                        <img src={LoginIcon} alt="login icon" />
+                    </div>
+                    <div
+                        className="w-14 h-14 bg-gray-600 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-200 shadow-lg"
+                        onClick={() =>
+                            window.scrollTo({ top: 0, behavior: "smooth" })
+                        }
+                    >
+                        <img src={ScrollToTop} alt="Scroll To Up" />
+                    </div>
+                </div>
+            )}
         </>
     );
 }

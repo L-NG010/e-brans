@@ -199,11 +199,11 @@ const Materi = () => {
       </div>
 
       {/* Kartu Materi */}
-      <div className="flex flex-wrap justify-center gap-8 w-full max-w-6xl mt-8">
+      <div className="flex flex-wrap justify-center gap-8 w-full max-w-6xl mt-8 ">
         {filteredMateri.map((major) => (
           <div
             key={major.id}
-            className="relative w-80 mt-10"
+            className="relative w-80 mt-10 hover:cursor-pointer"
             onMouseEnter={() => setHoveredCard(major.id)}
             onMouseLeave={() => setHoveredCard(null)}
           >
