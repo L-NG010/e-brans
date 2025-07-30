@@ -421,13 +421,13 @@ export default function Header(): JSX.Element {
             {isScrolled && (
                 <div className="fixed bottom-10 right-10 flex flex-col items-center gap-3 z-50">
                     <div
-                        className="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-200 shadow-lg"
+                        className="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center cursor-pointer transition-transform duration-200 shadow-lg"
                         onClick={handleLoginClick}
                     >
                         <img src={LoginIcon} alt="login icon" />
                     </div>
                     <div
-                        className="w-14 h-14 bg-gray-600 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-200 shadow-lg"
+                        className="w-14 h-14 bg-gray-600 rounded-full flex items-center justify-center cursor-pointer transition-transform duration-200 shadow-lg"
                         onClick={() =>
                             window.scrollTo({ top: 0, behavior: "smooth" })
                         }
