@@ -46,7 +46,7 @@ export default function BottomSection() {
   ];
 
   const [page, setPage] = useState(0);
-  const itemsPerPage = 8;
+  const itemsPerPage = 20; // 3 baris × 4 item per baris
 
   const totalPages = Math.ceil(allTags.length / itemsPerPage);
 
@@ -82,7 +82,7 @@ export default function BottomSection() {
         </div>
 
         {/* Tag yang tampil */}
-        <div className="flex-1 flex flex-wrap justify-center gap-3 max-w-2xl">
+        <div className="flex-1 flex flex-wrap justify-center gap-3 max-w-3xl">
           {visibleTags.map((tag, index) => (
             <span
               key={index}
