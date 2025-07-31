@@ -9,7 +9,7 @@ const IllustrationOne = () => {
     <div className="bg-slate-800 rounded-3xl p-8 shadow-2xl transform transition-all duration-500 hover:scale-105 relative overflow-hidden flex justify-center items-center">
       <div className="w-96 h-64 relative">
 
-        {/* Lottie - di tengah & offset sedikit kanan */}
+        {/* Lottie */}
         <div className="absolute inset-0 flex justify-center items-center transform translate-x-2">
           <Player
             autoplay
@@ -19,7 +19,7 @@ const IllustrationOne = () => {
           />
         </div>
 
-        {/* Floating icons - posisi lebih rapi */}
+        {/* Floating icons  */}
         <div className="absolute top-6 left-6 bg-slate-700 rounded-md p-2 transform -rotate-[12deg] shadow-md">
           <LibraryBig className="w-5 h-5 text-purple-400" />
         </div>
