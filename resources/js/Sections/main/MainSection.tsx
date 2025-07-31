@@ -25,12 +25,12 @@ const MainSection = () => {
 
             <div className="absolute w-full max-w-xl bottom-1/2 mb-20 z-10">
                 <div className="absolute transform translate-x-36 inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <Search size={18} className="text-gray-500" />
+                    <Search size={18} className="text-white" />
                 </div>
                 <input
                     type="text"
                     placeholder="Apa Yang Ingin Kamu Pelajari"
-                    className="w-full pl-10 pr-4 py-4 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-lg text-center placeholder:text-gray-400 bg-white shadow-sm"
+                    className="w-full pl-10 pr-4 py-4 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-lg text-center placeholder:text-white bg-transparent shadow-sm"
                 />
             </div>
 

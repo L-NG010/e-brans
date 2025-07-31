@@ -134,8 +134,7 @@ const CourseSection = () => {
                             >
                                 <motion.button
                                     className={`relative group bg-gradient-to-br ${major.color} rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden w-full`}
-                                    whileHover={{ scale: 1.05, y: -5 }}
-                                    whileTap={{ scale: 0.95 }}
+                                    
                                     data-aos="fade-up"
                                     data-aos-delay={index * 100}
                                     data-aos-anchor-placement="top-bottom"
@@ -172,8 +171,7 @@ const CourseSection = () => {
                         ? "text-white bg-gray-700"
                         : "text-gray-600 bg-white"
                 }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              
                 data-aos="fade-up"
             >
                 {/* Border dan Efek */}

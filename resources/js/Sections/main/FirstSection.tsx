@@ -80,7 +80,7 @@ const FirstSection = () => {
             <p className="text-white text-lg mb-8 leading-relaxed opacity-90">
               {slides[currentSlide].description}
             </p>
-            <button className="bg-white text-orange-500 px-8 py-4 rounded-full font-semibold text-lg hover:bg-orange-50 transition-all duration-300 transform hover:scale-105 shadow-lg">
+            <button className="border border-white text-white px-16 py-4 rounded-full font-extrabold text-xl hover:bg-orange-500 hover:bg-opacity-30 transition-all duration-300 transform ">
               {slides[currentSlide].buttonText}
             </button>
           </div>
