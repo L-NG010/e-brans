@@ -15,6 +15,9 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            animation: {
+                'spin-slow': 'spin 8s linear infinite',
+            },
         },
     },
 
