@@ -3,7 +3,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import { FileDigit, Lightbulb } from 'lucide-react';
 
 const IllustrationThree = () => {
-  const Learning = "/assets/json/learning.json";
+  const Learning = "/assets/json/learning-1.json";
 
   return (
     <div className="bg-slate-800 rounded-3xl p-8 shadow-2xl transform transition-all duration-500 hover:scale-105 relative overflow-hidden flex justify-center items-center">
