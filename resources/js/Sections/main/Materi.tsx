@@ -1,3 +1,4 @@
+import { router } from "@inertiajs/react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
@@ -8,6 +9,9 @@ const Materi = () => {
   const grades = ["X", "XI", "XII"];
   const student = "/assets/svg/student-icon.svg";
   const rpl = "/assets/img/iconrpl.png";
+  const coursesPage = () => {
+    router.visit('/courses');
+  }
 
   const materiData = [
     // Kelas X
@@ -247,7 +251,7 @@ const Materi = () => {
     <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm">
       Tentang
     </button>
-    <button className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm">
+    <button onClick={coursesPage} className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm">
       Mulai Belajar
     </button>
   </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect, ReactNode, useCallback } from "react";
 import { Search, ChevronDown, Code, Smartphone, HandCoins, LucideIcon } from "lucide-react";
+import { router, usePage } from "@inertiajs/react";
 
 // Types
 interface CourseItem {
@@ -30,6 +31,10 @@ export default function Header(): JSX.Element {
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
     const [showSearch, setShowSearch] = useState<boolean>(true);
     const [showLoginPopup, setShowLoginPopup] = useState<boolean>(false);
+    const beranda = () => {
+        router.visit('/');
+    }
+    const { url } = usePage();
 
     const courses: CourseItem[] = [
         { name: "Web Design", href: "#", icon: Code },
@@ -151,11 +156,10 @@ export default function Header(): JSX.Element {
         onMouseLeave,
     }: DropdownMenuProps): JSX.Element => (
         <div
-            className={`absolute bg-white shadow-lg rounded-lg mt-2 w-48 z-20 border border-gray-100 pt-1 pb-1 transition-all duration-200 ease-out ${
-                isOpen
-                    ? "opacity-100 visible translate-y-0 scale-100"
-                    : "opacity-0 invisible -translate-y-1 scale-95"
-            }`}
+            className={`absolute bg-white shadow-lg rounded-lg mt-2 w-48 z-20 border border-gray-100 pt-1 pb-1 transition-all duration-200 ease-out ${isOpen
+                ? "opacity-100 visible translate-y-0 scale-100"
+                : "opacity-0 invisible -translate-y-1 scale-95"
+                }`}
             style={{
                 transformOrigin: "top center",
                 // Pastikan dropdown tidak bergeser
@@ -173,17 +177,15 @@ export default function Header(): JSX.Element {
     return (
         <>
             <header
-                className={`bg-white/90 backdrop-blur-md px-6 flex items-center justify-center shadow-md fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
-                    isScrolled ? "py-2 h-16" : "py-4 h-24"
-                }`}
+                className={`bg-white/90 backdrop-blur-md px-6 flex items-center justify-center shadow-md fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${isScrolled ? "py-2 h-16" : "py-4 h-24"
+                    }`}
             >
                 {/* Logo, teks, dan search - hilang saat di-scroll */}
                 <div
-                    className={`flex items-center w-full justify-between transition-all duration-300 ease-out ${
-                        isScrolled
-                            ? "opacity-0 pointer-events-none"
-                            : "opacity-100"
-                    }`}
+                    className={`flex items-center w-full justify-between transition-all duration-300 ease-out ${isScrolled
+                        ? "opacity-0 pointer-events-none"
+                        : "opacity-100"
+                        }`}
                 >
                     <div className="flex items-center">
                         <img
@@ -204,11 +206,10 @@ export default function Header(): JSX.Element {
                     </div>
                     <div className="flex items-center gap-4 ms-8">
                         <div
-                            className={`relative w-64 mr-8 transition-all duration-300 ease-out ${
-                                showSearch
-                                    ? "opacity-100 translate-x-0"
-                                    : "opacity-0 translate-x-4"
-                            }`}
+                            className={`relative w-64 mr-8 transition-all duration-300 ease-out ${showSearch
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 translate-x-4"
+                                }`}
                         >
                             <input
                                 type="text"
@@ -224,12 +225,19 @@ export default function Header(): JSX.Element {
 
                 {/* Navigasi dropdown - selalu terlihat dan di tengah saat di-scroll */}
                 <div
-                    className={`flex items-center gap-6 transition-all duration-300 ease-out ${
-                        isScrolled
-                            ? "absolute left-1/2 transform -translate-x-1/2"
-                            : ""
-                    }`}
+                    className={`flex items-center gap-6 transition-all duration-300 ease-out ${isScrolled
+                        ? "absolute left-1/2 transform -translate-x-1/2"
+                        : ""
+                        }`}
                 >
+                    {url !== '/' && (
+                        <button
+                            className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-sm whitespace-nowrap py-2 px-1"
+                            onClick={beranda}
+                        >
+                            Beranda
+                        </button>
+                    )}
                     <div className="relative dropdown-container">
                         <button
                             className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-sm whitespace-nowrap py-2 px-1"
@@ -240,11 +248,10 @@ export default function Header(): JSX.Element {
                             Telusuri Kursus
                             <ChevronDown
                                 size={16}
-                                className={`transition-transform duration-200 ease-out ${
-                                    openDropdown === "courses"
-                                        ? "rotate-180"
-                                        : "rotate-0"
-                                }`}
+                                className={`transition-transform duration-200 ease-out ${openDropdown === "courses"
+                                    ? "rotate-180"
+                                    : "rotate-0"
+                                    }`}
                             />
                         </button>
                         <DropdownMenu
@@ -282,11 +289,10 @@ export default function Header(): JSX.Element {
                             Klaim Sertifikat Anda
                             <ChevronDown
                                 size={16}
-                                className={`transition-transform duration-200 ease-out ${
-                                    openDropdown === "certificate"
-                                        ? "rotate-180"
-                                        : "rotate-0"
-                                }`}
+                                className={`transition-transform duration-200 ease-out ${openDropdown === "certificate"
+                                    ? "rotate-180"
+                                    : "rotate-0"
+                                    }`}
                             />
                         </button>
                         <DropdownMenu
@@ -318,11 +324,10 @@ export default function Header(): JSX.Element {
                             Temukan Tugas Anda
                             <ChevronDown
                                 size={16}
-                                className={`transition-transform duration-200 ease-out ${
-                                    openDropdown === "task"
-                                        ? "rotate-180"
-                                        : "rotate-0"
-                                }`}
+                                className={`transition-transform duration-200 ease-out ${openDropdown === "task"
+                                    ? "rotate-180"
+                                    : "rotate-0"
+                                    }`}
                             />
                         </button>
                         <DropdownMenu
@@ -345,11 +350,10 @@ export default function Header(): JSX.Element {
 
                 {/* Login/Signup - hilang saat di-scroll */}
                 <nav
-                    className={`flex gap-2 md:gap-4 transition-all duration-300 ease-out ${
-                        isScrolled
-                            ? "opacity-0 pointer-events-none"
-                            : "opacity-100"
-                    }`}
+                    className={`flex gap-2 md:gap-4 transition-all duration-300 ease-out ${isScrolled
+                        ? "opacity-0 pointer-events-none"
+                        : "opacity-100"
+                        }`}
                 >
                     <button
                         className="bg-white text-blue-600 px-3 py-1.5 md:px-4 md:py-2 rounded-md font-medium hover:bg-gray-100 transition-colors duration-200 text-sm whitespace-nowrap"

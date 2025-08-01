@@ -8,6 +8,7 @@ use Inertia\Inertia;
 class CourseController extends Controller
 {
     public function index(){
-        return Inertia::render('Course');
+        return Inertia::render('MateriPage', [
+        ]);
     }
 }
