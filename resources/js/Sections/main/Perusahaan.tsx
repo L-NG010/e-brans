@@ -11,7 +11,7 @@ const Perusahaan = () => {
     "assets/img/perusahaan/alatbrat.png",
   ];
 
-  const duplicatedImages = [...images, ...images];
+  const duplicatedImages = [...images,...images,...images,...images,...images,...images, ...images];
 
   const controls = useAnimation();
 
@@ -28,7 +28,7 @@ const Perusahaan = () => {
       },
     });
   }, [controls]);
-// bg-[#f1f0f0]
+
   return (
     <div className="relative flex flex-col items-center mt-20  py-16  bg-gray-100  min-h-[40vh]">
       <motion.div
