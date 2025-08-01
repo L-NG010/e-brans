@@ -18,16 +18,19 @@ interface CourseItem {
     href: string;
     icon: any;
 }
+
 interface MenuItem {
     name: string;
     href: string;
 }
+
 interface DropdownMenuProps {
     isOpen: boolean;
     children: ReactNode;
     onMouseEnter: () => void;
     onMouseLeave: () => void;
 }
+
 type DropdownType = "courses" | "certificate" | "task" | null;
 
 export default function Header(): JSX.Element {
@@ -54,10 +57,12 @@ export default function Header(): JSX.Element {
         { name: "Mobile", href: "#", icon: Smartphone },
         { name: "Marketing", href: "#", icon: HandCoins },
     ];
+
     const sertificate: MenuItem[] = [
         { name: "Praktik Kerja Lapangan", href: "#" },
         { name: "Lomba", href: "#" },
     ];
+
     const task: MenuItem[] = [
         { name: "Jurusan", href: "#" },
         { name: "Umum", href: "#" },
@@ -156,6 +161,7 @@ export default function Header(): JSX.Element {
         setIsExiting(false);
         setFormData({ username: "", password: "", confirmPassword: "" });
         setShowPassword(false);
+        document.body.classList.add("overflow-hidden"); // Mencegah scroll saat popup aktif
     };
 
     const handleClosePopup = () => {
@@ -165,6 +171,7 @@ export default function Header(): JSX.Element {
             setIsExiting(false);
             setFormData({ username: "", password: "", confirmPassword: "" });
             setShowPassword(false);
+            document.body.classList.remove("overflow-hidden"); // Mengembalikan scroll saat popup ditutup
         }, 300);
     };
 
@@ -219,7 +226,7 @@ export default function Header(): JSX.Element {
     return (
         <>
             {/* Animasi Modal dan Slide */}
-            <style >{`
+            <style>{`
                 @keyframes modalEnter {
                     from {
                         opacity: 0;
@@ -330,6 +337,7 @@ export default function Header(): JSX.Element {
                             </span>
                         </div>
                     </div>
+
                     <div className="flex items-center gap-4 ms-8">
                         <div
                             className={`relative w-64 mr-8 transition-all duration-300 ease-out ${
@@ -387,7 +395,7 @@ export default function Header(): JSX.Element {
                                         <a
                                             key={index}
                                             href={service.href}
-                                            className="px-4 py-2.5 text-sm hover:bg-blue-50 transition-colors duration-150 flex items-center "
+                                            className="px-4 py-2.5 text-sm hover:bg-blue-50 transition-colors duration-150 flex items-center"
                                         >
                                             <IconComponent size={16} />
                                             <span className="ms-2">
@@ -399,6 +407,7 @@ export default function Header(): JSX.Element {
                             )}
                         </DropdownMenu>
                     </div>
+
                     <div className="relative dropdown-container">
                         <button
                             className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-sm whitespace-nowrap py-2 px-1"
@@ -434,6 +443,7 @@ export default function Header(): JSX.Element {
                             )}
                         </DropdownMenu>
                     </div>
+
                     <div className="relative dropdown-container">
                         <button
                             className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-sm whitespace-nowrap py-2 px-1"
@@ -471,20 +481,20 @@ export default function Header(): JSX.Element {
 
                 {/* Login/Signup - hilang saat di-scroll */}
                 <nav
-                    className={`flex gap-2 md:gap-4 transition-all duration-300 ease-out ${
+                    className={`flex gap-4 transition-all duration-300 ease-out ${
                         isScrolled
                             ? "opacity-0 pointer-events-none"
                             : "opacity-100"
                     }`}
                 >
                     <button
-                        className="bg-white text-blue-600 px-3 py-1.5 md:px-4 md:py-2 rounded-md font-medium hover:bg-gray-100 transition-colors duration-200 text-sm whitespace-nowrap"
+                        className="bg-white text-blue-600 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors duration-200 text-sm whitespace-nowrap"
                         onClick={() => handlePopupToggle(true)}
                     >
                         Login
                     </button>
                     <button
-                        className="bg-blue-500 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md font-medium hover:bg-blue-600 transition-colors duration-200 text-sm whitespace-nowrap"
+                        className="bg-blue-500 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-600 transition-colors duration-200 text-sm whitespace-nowrap"
                         onClick={() => handlePopupToggle(false)}
                     >
                         Signup
@@ -495,13 +505,13 @@ export default function Header(): JSX.Element {
             {/* Popup Login/Signup dengan Animasi Slide */}
             {showPopup && (
                 <div
-                    className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 transition-opacity duration-300 ${
+                    className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6 transition-opacity duration-300 ${
                         isExiting ? "opacity-0" : "opacity-100"
                     }`}
                     onClick={handleClosePopup}
                 >
                     <div
-                        className={`bg-white rounded-3xl shadow-2xl w-full max-w-md mx-auto relative overflow-hidden ${
+                        className={`bg-white rounded-3xl shadow-2xl w-full max-w-md mx-auto relative overflow-hidden p-6 ${
                             isExiting ? "modal-exit" : "modal-enter"
                         }`}
                         onClick={(e) => e.stopPropagation()}
@@ -515,7 +525,7 @@ export default function Header(): JSX.Element {
                         </button>
 
                         {/* Header */}
-                        <div className="px-8 pt-12 pb-8 text-center">
+                        <div className="px-4 pt-8 pb-6 text-center">
                             <h2 className="text-2xl font-bold text-gray-800 mb-2">
                                 {isLoginMode
                                     ? "Welcome Back"
@@ -528,8 +538,8 @@ export default function Header(): JSX.Element {
                             </p>
                         </div>
 
-                        {/* Form dengan Animasi Slide - Sudah Diperbaiki (Tombol Tidak Kepotong) */}
-                        <div className="px-8 pb-8 relative min-h-72 h-auto">
+                        {/* Form dengan Animasi Slide */}
+                        <div className="px-6 pb-8 relative min-h-80 h-auto">
                             <div
                                 key={isLoginMode ? "login" : "signup"}
                                 className={`absolute inset-0 transition-none ${
@@ -542,7 +552,7 @@ export default function Header(): JSX.Element {
                                         : "slide-enter"
                                 }`}
                             >
-                                <div className="space-y-4">
+                                <div className="space-y-6">
                                     {/* Username */}
                                     <div className="relative">
                                         <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
@@ -560,7 +570,7 @@ export default function Header(): JSX.Element {
                                                     e.target.value
                                                 )
                                             }
-                                            className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 text-gray-700"
+                                            className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 text-gray-700"
                                             placeholder="Username"
                                         />
                                     </div>
@@ -586,7 +596,7 @@ export default function Header(): JSX.Element {
                                                     e.target.value
                                                 )
                                             }
-                                            className="w-full pl-12 pr-12 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 text-gray-700"
+                                            className="w-full pl-12 pr-12 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 text-gray-700"
                                             placeholder="Password"
                                         />
                                         <button
@@ -632,34 +642,36 @@ export default function Header(): JSX.Element {
                                                         e.target.value
                                                     )
                                                 }
-                                                className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 text-gray-700"
+                                                className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 text-gray-700"
                                                 placeholder="Confirm Password"
                                             />
                                         </div>
                                     )}
 
                                     {/* Submit Button */}
-                                    <button
-                                        onClick={handleSubmit}
-                                        className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 rounded-2xl transition-colors duration-200 mt-6"
-                                    >
-                                        {isLoginMode ? "Masuk" : "Daftar"}
-                                    </button>
+                                    <div className="flex flex-col gap-4">
+                                        <button
+                                            onClick={handleSubmit}
+                                            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-xl transition-colors duration-200"
+                                        >
+                                            {isLoginMode ? "Masuk" : "Daftar"}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* Toggle Mode */}
-                        <div className="px-8 pb-6 text-center">
+                        <div className="px-6 pb-6 text-center">
                             <p className="text-gray-600 text-sm">
                                 {isLoginMode
-                                    ? "Belum Punya Akun? "
-                                    : "Sudah Punya Akun? "}
+                                    ? "Belum punya akun?"
+                                    : "Sudah punya akun?"}
                                 <button
                                     onClick={() => switchMode(!isLoginMode)}
-                                    className="text-orange-500 hover:text-orange-600 font-medium underline transition-colors duration-200"
+                                    className="text-orange-500 hover:text-orange-600 font-medium underline transition-colors duration-200 ml-1"
                                 >
-                                    {isLoginMode ? "Sign Up" : "Login"}
+                                    {isLoginMode ? "Sign up" : "Login"}
                                 </button>
                             </p>
                         </div>
