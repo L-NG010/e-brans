@@ -117,7 +117,7 @@ const MainSection = () => {
 
             <div className="flex max-w-6xl mx-auto">
                 {/* Left Sidebar */}
-                <div className="w-80 p-6 border-r border-gray-200">
+                <div className="w-80 p-6">
                     <div className="border rounded p-4 mb-6">
                         <h2 className="font-bold text-lg mb-4">Kelas X</h2>
                         <div className="mb-6">

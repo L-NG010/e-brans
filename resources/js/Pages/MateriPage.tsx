@@ -12,9 +12,7 @@ export default function MateriPage() {
                 <MainSection />
             </div>
 
-            <div className="relative -mt-28">
                 <Footer/>
-            </div>
         </div>
     )
 }

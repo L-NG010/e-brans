@@ -11,7 +11,7 @@ import {
     EyeOff,
     X,
 } from "lucide-react";
-import { router, usePage } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 
 // Types
 interface CourseItem {
@@ -204,8 +204,6 @@ export default function Header(): JSX.Element {
         router.visit('/');
     }
 
-    const {url} = usePage();
-
     const DropdownMenu = ({
         isOpen,
         children,
@@ -331,7 +329,8 @@ export default function Header(): JSX.Element {
                             alt="logo sekolah"
                             width={60}
                             height={60}
-                            className="flex-shrink-0"
+                            className="flex-shrink-0 hover:cursor-pointer"
+                            onClick={homePage}
                         />
                         <div className="ms-2 flex flex-col transition-all duration-300 ease-out overflow-hidden max-w-xs">
                             <div className="text-xl font-extrabold text-[#465159] leading-none whitespace-nowrap">
@@ -369,14 +368,6 @@ export default function Header(): JSX.Element {
                         : ""
                         }`}
                 >
-                    {url !== '/' && (
-                        <button
-                            className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-sm whitespace-nowrap py-2 px-1"
-                            onClick={homePage}
-                        >
-                            Beranda
-                        </button>
-                    )}
                     <div className="relative dropdown-container">
                         <button
                             className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-sm whitespace-nowrap py-2 px-1"
