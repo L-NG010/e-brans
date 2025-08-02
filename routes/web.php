@@ -6,4 +6,5 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/',[HomeController::class,'index']);
-Route::get('/courses',[CourseController::class,'index']);
+Route::get('/materi/mapel/{mapelId}', [CourseController::class, 'showByMapel']);
+

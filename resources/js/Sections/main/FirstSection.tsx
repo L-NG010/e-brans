@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import IllustrationOne from '@/Component/IllustrationOne';
 import IllustrationTwo from '@/Component/IllustrationTwo';
 import IllustrationThree from '@/Component/IllustrationThree';
@@ -28,12 +28,10 @@ const FirstSection = () => {
     }
   ];
 
-  // Auto slide functionality
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000); // Change slide every 5 seconds
-
+    }, 5000);
     return () => clearInterval(timer);
   }, [slides.length]);
 
@@ -44,8 +42,7 @@ const FirstSection = () => {
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   };
-
-  const goToSlide = (index: number) => {
+  const goToSlide = (index: React.SetStateAction<number>) => {
     setCurrentSlide(index);
   };
 
@@ -61,7 +58,6 @@ const FirstSection = () => {
           backgroundBlendMode: 'overlay'
         }}
       >
-        {/* Decorative circles */}
         <div className="absolute top-10 left-10 w-32 h-32 border-2 border-white border-opacity-20 rounded-full"></div>
         <div className="absolute top-20 left-20 w-16 h-16 border border-white border-opacity-30 rounded-full"></div>
         <div className="absolute bottom-20 right-10 w-24 h-24 border-2 border-white border-opacity-20 rounded-full"></div>
@@ -69,8 +65,7 @@ const FirstSection = () => {
       </div>
 
       {/* Main content container */}
-      <div className="relative z-10 flex items-center justify-between h-full max-w-7xl mx-auto px-8">
-
+      <div className="relative z-10 flex items-center justify-between h-full max-w-7xl mx-auto px-20">
         {/* Left content */}
         <div className="flex-1 max-w-xl ms-14">
           <div className="transform transition-all duration-500 ease-in-out">
@@ -80,33 +75,31 @@ const FirstSection = () => {
             <p className="text-white text-lg mb-8 leading-relaxed opacity-90">
               {slides[currentSlide].description}
             </p>
-            <button className="border border-white text-white px-16 py-4 rounded-full font-extrabold text-xl hover:bg-orange-500 hover:bg-opacity-30 transition-all duration-300 transform ">
+            <button className="border border-white text-white px-16 py-4 rounded-full font-extrabold text-xl hover:bg-orange-500 hover:bg-opacity-30 transition-all duration-300 transform">
               {slides[currentSlide].buttonText}
             </button>
           </div>
         </div>
 
-        {/* Right illustration */}
-        <div className="flex-1 flex justify-center items-center">
-          <div className="relative w-[500px] h-[350px]">
+        {/* Right illustration and dots */}
+        <div className="flex-1 relative flex justify-center items-center">
+          <div className="w-[500px] h-[350px]">
             {slides[currentSlide].illustration}
           </div>
+          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex gap-3">
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  currentSlide === index
+                    ? 'bg-white scale-125'
+                    : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+                }`}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-
-      {/* Navigation dots - positioned below the illustration */}
-      <div className="absolute bottom-36 right-80 mr-2 flex gap-3 z-20 transform translate-x-12">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              currentSlide === index
-                ? 'bg-white scale-125'
-                : 'bg-white bg-opacity-50 hover:bg-opacity-75'
-            }`}
-          />
-        ))}
       </div>
 
       {/* Navigation arrows */}
@@ -116,7 +109,6 @@ const FirstSection = () => {
       >
         <ChevronLeft className="w-6 h-6" />
       </button>
-
       <button
         onClick={nextSlide}
         className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-300 z-20"

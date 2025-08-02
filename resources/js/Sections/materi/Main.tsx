@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import { BookOpen } from 'lucide-react';
+import {MapelType} from "@/types/main/mapel";
+import {MateriType} from "@/types/main/materi";
+
+interface MateriProps {
+  mapel: MapelType[];
+  materi:MateriType[];
+}
 
 const MainSection = () => {
 
-    const WebDevelopingIllustration = () => (
+    const WebDevelopingIllustration = ({mapel,materi}:MateriProps) => (
         <div className="relative bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 rounded-lg p-6 text-white overflow-hidden h-48">
             <div className="absolute top-3 left-3 text-xs opacity-75">WEB DEVELOPING</div>
             <div className="absolute top-3 right-3 flex space-x-1">

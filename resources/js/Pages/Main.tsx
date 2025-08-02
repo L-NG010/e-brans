@@ -2,14 +2,22 @@ import AkreditasSection from "@/Sections/main/AkreditasSection";
 import MainSection from "@/Sections/main/MainSection";
 import Header from "@/Layouts/Header";
 import CourseSection from "@/Sections/main/CourseSection";
-import { usePage } from "@inertiajs/react";
 import Footer from "@/Layouts/Footer";
 import Materi from "@/Sections/main/Materi";
 import FirstSection from "@/Sections/main/FirstSection";
 import Perusahaan from "@/Sections/main/Perusahaan";
 import BottomSection from "@/Sections/main/BottomSection";
+import {MapelType} from "@/types/main/mapel";
+import { MateriType } from "@/types/main/materi";
+import { log } from "console";
 
-export default function Main() {
+interface MainProps {
+  mapel: MapelType[];
+  materi: MateriType[];
+}
+
+export default function Main({mapel,materi}:MainProps) {
+
 
     return (
         <div className="relative">
@@ -22,7 +30,7 @@ export default function Main() {
             <div className="relative -mt-28">
                 <AkreditasSection />
                 <CourseSection />
-                <Materi/>
+                <Materi mapel={mapel} materi={materi}/>
                 <Perusahaan/>
                 <BottomSection/>
                 <Footer/>
