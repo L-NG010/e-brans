@@ -18,6 +18,7 @@ const MainSection = ({ materi, mapel }: MateriProps) => {
     const currentId = 3; // contoh id materi yg sedang dibuka, bisa diganti
     const currentMateri = materi.find((m) => m.id === currentId);
     console.log(materi);
+    console.log(mapel);
 
     const WebDevelopingIllustration = ({ mapel, materi }: MateriProps) => (
         <div className="relative bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 rounded-lg p-6 text-white overflow-hidden h-48">
@@ -183,17 +184,19 @@ const MainSection = ({ materi, mapel }: MateriProps) => {
                 {/* Main Content */}
                 <div className="flex-1 p-6">
                     <h1 className="text-2xl font-bold mb-2">
-                        <div>
-                            {materi.map((item) => (
-                                <div key={item.id}>{item.judul}</div>
-                            ))}
-                        </div>
+                        MAPEL
                     </h1>
-                    <p className="text-gray-600 mb-6 text-sm">Mengidentifikasi informasi terkait dalam teks naratif</p>
+                    {/* <p className="text-gray-600 mb-6 text-sm">Mengidentifikasi informasi terkait dalam teks naratif</p> */}
                     <div className="border border-gray-300 rounded p-6">
                         <div className="mb-6">
-                            <h2 className="text-xl font-bold mb-2">Teks Naratif</h2>
-                            <p className="text-gray-600 text-sm mb-4">Mengidentifikasi informasi</p>
+                            <h2 className="text-xl font-bold mb-2">
+                                <div>
+                                    {materi.map((item) => (
+                                        <div key={item.id}>{item.judul}</div>
+                                    ))}
+                                </div>
+                            </h2>
+                            {/* <p className="text-gray-600 text-sm mb-4">Mengidentifikasi informasi</p> */}
 
                             <div className="mb-6">
                                 <WebDevelopingIllustration />
