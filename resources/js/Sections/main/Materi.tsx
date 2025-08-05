@@ -16,12 +16,20 @@ const Materi = ({ mapel, materi }: MateriProps) => {
     const grades = ["X", "XI", "XII"];
     const student = "/assets/svg/student-icon.svg";
     const rpl = "/assets/img/iconrpl.png";
+    // console.log(mapel.map((item) => item.nama));
+    // console.log(materi)
+
 
     const filteredMateri = materi.filter((item) => item.kelas === selected);
 
     return (
         <div className="relative flex flex-col items-center mt-20 px-4">
             {/* Garis */}
+            {/* <ul>
+                {materi.map((item) => (
+                    <li key={item.id}>{item.judul}</li>
+                ))}
+            </ul> */}
             <div className="w-1/2 border-t-2 border-gray-300 my-4 mx-auto"></div>
 
             {/* Selector Grade */}
@@ -38,11 +46,10 @@ const Materi = ({ mapel, materi }: MateriProps) => {
                             <button
                                 key={grade}
                                 onClick={() => setSelected(grade)}
-                                className={`flex-1 h-12 flex items-center justify-center rounded-full font-bold ${
-                                    selected === grade
+                                className={`flex-1 h-12 flex items-center justify-center rounded-full font-bold ${selected === grade
                                         ? "bg-blue-600 text-white shadow-md"
                                         : "text-blue-800 hover:bg-blue-100"
-                                }`}
+                                    }`}
                             >
                                 {grade}
                             </button>
