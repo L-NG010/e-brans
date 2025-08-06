@@ -82,11 +82,11 @@ const FirstSection = () => {
         </div>
 
         {/* Right illustration and dots */}
-        <div className="flex-1 relative flex justify-center items-center">
+        <div className="flex-1 relative flex justify-center items-center ">
           <div className="w-[500px] h-[350px]">
             {slides[currentSlide].illustration}
           </div>
-          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex gap-3">
+          <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 flex gap-3">
             {slides.map((_, index) => (
               <button
                 key={index}
