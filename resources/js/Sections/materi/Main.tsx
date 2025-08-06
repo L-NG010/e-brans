@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { BookOpen } from 'lucide-react';
+import React, { useState } from "react";
+import { BookOpen } from "lucide-react";
 import { MapelType } from "@/types/main/mapel";
 import { MateriType } from "@/types/main/materi";
 import { router } from "@inertiajs/react";
 import { motion } from "framer-motion";
-
+import { log } from "console";
 
 interface MateriProps {
     mapel: MapelType[];
@@ -12,17 +12,25 @@ interface MateriProps {
 }
 
 const MainSection = ({ materi, mapel }: MateriProps) => {
-    // pindahin hooknya ke sini
     const [selected, setSelected] = useState("X");
     const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-    const currentId = 3; // contoh id materi yg sedang dibuka, bisa diganti
-    const currentMateri = materi.find((m) => m.id === currentId);
-    console.log(materi);
-    console.log(mapel);
+  const currentMapelId = materi.length > 0 ? materi[0].mapel_id : 0;
+
+// Cari data mapel yang sesuai
+const currentMapel = mapel.find((m) => m.id === currentMapelId);
+
+console.log(currentMapel);
+
+    const getMapelNama = (mapel_id: number) => {
+        const targetMapel = mapel.find((m) => m.id === mapel_id);
+        return targetMapel ? targetMapel.nama : "Mapel tidak ditemukan";
+    };
 
     const WebDevelopingIllustration = ({ mapel, materi }: MateriProps) => (
         <div className="relative bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 rounded-lg p-6 text-white overflow-hidden h-48">
-            <div className="absolute top-3 left-3 text-xs opacity-75">WEB DEVELOPING</div>
+            <div className="absolute top-3 left-3 text-xs opacity-75">
+                WEB DEVELOPING
+            </div>
             <div className="absolute top-3 right-3 flex space-x-1">
                 <div className="w-2 h-2 bg-red-400 rounded-full"></div>
                 <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
@@ -78,7 +86,9 @@ const MainSection = ({ materi, mapel }: MateriProps) => {
                     <div className="w-20 h-12 bg-gradient-to-b from-orange-400 to-orange-500 rounded-t-full mt-1"></div>
                     <div className="w-24 h-10 bg-cyan-400 rounded-lg mt-1 relative overflow-hidden">
                         <div className="absolute bottom-1 right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                            <span className="text-xs text-gray-800 font-bold">×</span>
+                            <span className="text-xs text-gray-800 font-bold">
+                                ×
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -112,7 +122,7 @@ const MainSection = ({ materi, mapel }: MateriProps) => {
 
             {/* Bottom right elements */}
             <div className="absolute bottom-4 right-6">
-                <div className="text-lg text-yellow-400">{'</>'}</div>
+                <div className="text-lg text-yellow-400">{"</>"}</div>
             </div>
 
             {/* Floating elements */}
@@ -138,36 +148,60 @@ const MainSection = ({ materi, mapel }: MateriProps) => {
                     <div className="border rounded p-4 mb-6">
                         <h2 className="font-bold text-lg mb-4">Kelas X</h2>
                         <div className="mb-6">
-                            <h3 className="font-semibold mb-3 text-sm">Materi Yang Diberikan :</h3>
+                            <h3 className="font-semibold mb-3 text-sm">
+                                Materi Yang Diberikan :
+                            </h3>
                             <div className="space-y-2 text-sm">
-                                <div className="cursor-pointer hover:bg-gray-50 p-1">Naratif</div>
-                                <div className="cursor-pointer hover:bg-gray-50 p-1">Argumentatif</div>
-                                <div className="cursor-pointer hover:bg-gray-50 p-1">Eksposisi</div>
+                                <div className="cursor-pointer hover:bg-gray-50 p-1">
+                                    Naratif
+                                </div>
+                                <div className="cursor-pointer hover:bg-gray-50 p-1">
+                                    Argumentatif
+                                </div>
+                                <div className="cursor-pointer hover:bg-gray-50 p-1">
+                                    Eksposisi
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div className="border border-gray-300 rounded p-4">
-                        <h3 className="font-bold text-base mb-4">Teks Naratif</h3>
+                        <h3 className="font-bold text-base mb-4">
+                            Teks Naratif
+                        </h3>
                         <div className="mb-4">
-                            <h4 className="font-semibold text-sm mb-2">Struktur teks Narasi</h4>
+                            <h4 className="font-semibold text-sm mb-2">
+                                Struktur teks Narasi
+                            </h4>
                             <div className="space-y-3 text-xs">
                                 <div>
-                                    <div className="font-semibold mb-1">Orientasi</div>
+                                    <div className="font-semibold mb-1">
+                                        Orientasi
+                                    </div>
                                     <div className="text-gray-700 leading-relaxed">
-                                        Bagian ini memperkenalkan tokoh, latar (waktu dan tempat), serta suasana awal cerita. Biasanya para pembaca memahami situasi awal tokoh utama.
+                                        Bagian ini memperkenalkan tokoh, latar
+                                        (waktu dan tempat), serta suasana awal
+                                        cerita. Biasanya para pembaca memahami
+                                        situasi awal tokoh utama.
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="font-semibold mb-1">Komplikasi (Masalah atau Konflik)</div>
+                                    <div className="font-semibold mb-1">
+                                        Komplikasi (Masalah atau Konflik)
+                                    </div>
                                     <div className="text-gray-700 leading-relaxed">
-                                        Bagian ini memperkenalkan tokoh, latar (waktu dan tempat), serta suasana awal cerita.
+                                        Bagian ini memperkenalkan tokoh, latar
+                                        (waktu dan tempat), serta suasana awal
+                                        cerita.
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="font-semibold mb-1">Resolusi</div>
+                                    <div className="font-semibold mb-1">
+                                        Resolusi
+                                    </div>
                                     <div className="text-gray-700 leading-relaxed">
-                                        Bagian ini akan memberikan solusi dan menunjukkan bahwa sudah berakhir
+                                        Bagian ini akan memberikan solusi dan
+                                        menunjukkan bahwa sudah berakhir
                                     </div>
                                 </div>
                             </div>
@@ -183,9 +217,7 @@ const MainSection = ({ materi, mapel }: MateriProps) => {
 
                 {/* Main Content */}
                 <div className="flex-1 p-6">
-                    <h1 className="text-2xl font-bold mb-2">
-                        MAPEL
-                    </h1>
+                    <h1 className="text-2xl font-bold mb-2">{currentMapel?.nama}</h1>
                     {/* <p className="text-gray-600 mb-6 text-sm">Mengidentifikasi informasi terkait dalam teks naratif</p> */}
                     <div className="border border-gray-300 rounded p-6">
                         <div className="mb-6">
@@ -199,21 +231,20 @@ const MainSection = ({ materi, mapel }: MateriProps) => {
                             {/* <p className="text-gray-600 text-sm mb-4">Mengidentifikasi informasi</p> */}
 
                             <div className="mb-6">
-                                <WebDevelopingIllustration />
+                               <WebDevelopingIllustration mapel={mapel} materi={materi} />
                             </div>
 
                             <div className="space-y-4 text-sm leading-relaxed">
                                 <div>
-                                    <h3 className="font-bold mb-2">Pengertian Teks Naratif</h3>
-
                                     <div className="text-gray-800 h-48 overflow-y-scroll">
                                         <ul className="list-disc">
                                             {materi.map((item) => (
-                                                <li key={item.id}>{item.konten}</li>
+                                                <li key={item.id}>
+                                                    {item.konten}
+                                                </li>
                                             ))}
                                         </ul>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -222,7 +253,8 @@ const MainSection = ({ materi, mapel }: MateriProps) => {
                         <div className="flex space-x-3">
                             <button
                                 onClick={() => router.visit(`/`)}
-                                className="px-6 py-2 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors">
+                                className="px-6 py-2 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors"
+                            >
                                 Selesai
                             </button>
                             <button className="px-6 py-2 border border-gray-300 text-gray-700 text-sm rounded hover:bg-gray-50 transition-colors">
@@ -240,11 +272,12 @@ const MainSection = ({ materi, mapel }: MateriProps) => {
             <div className="max-w-6xl mx-auto mt-16">
                 <div className="flex flex-wrap justify-center gap-8 w-full mt-8">
                     {materi
-                        .filter((item) => item.mapel_id !== currentId)
+                        .filter((item) => item.mapel_id !== currentMapelId)
                         .slice(0, 3)
                         .map((item) => {
                             const mapelName =
-                                mapel.find((m) => m.id === item.mapel_id)?.nama ?? "Mata Pelajaran";
+                                mapel.find((m) => m.id === item.mapel_id)
+                                    ?.nama ?? "Mata Pelajaran";
 
                             return (
                                 <div
@@ -256,7 +289,10 @@ const MainSection = ({ materi, mapel }: MateriProps) => {
                                     <div className="relative bg-white rounded-2xl p-6 shadow-lg overflow-hidden border border-gray-200">
                                         <div className="w-full">
                                             <img
-                                                src={item.gambar || "/assets/img/iconrpl.png"}
+                                                src={
+                                                    item.gambar ||
+                                                    "/assets/img/iconrpl.png"
+                                                }
                                                 alt=""
                                                 className="w-full h-40 object-cover rounded-t-2xl"
                                             />
@@ -275,8 +311,13 @@ const MainSection = ({ materi, mapel }: MateriProps) => {
                                                 Tentang
                                             </button>
                                             <button
-                                                onClick={() => router.visit(`/materi/mapel/${item.mapel_id}`)}
-                                                className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm">
+                                                onClick={() =>
+                                                    router.visit(
+                                                        `/materi/mapel/${item.mapel_id}`
+                                                    )
+                                                }
+                                                className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm"
+                                            >
                                                 Mulai Belajar
                                             </button>
                                         </div>
@@ -284,9 +325,14 @@ const MainSection = ({ materi, mapel }: MateriProps) => {
                                         {/* Hover Detail */}
                                         {hoveredCard === item.id && (
                                             <div className="absolute inset-0 bg-white rounded-2xl p-4 shadow-2xl z-20 pb-20">
-                                                <h4 className="text-lg font-bold text-gray-800">{item.judul}</h4>
+                                                <h4 className="text-lg font-bold text-gray-800">
+                                                    {item.judul}
+                                                </h4>
                                                 <p className="text-sm text-gray-600 mt-1">
-                                                    Diposting: {new Date(item.created_at).toLocaleDateString()}
+                                                    Diposting:{" "}
+                                                    {new Date(
+                                                        item.created_at
+                                                    ).toLocaleDateString()}
                                                 </p>
                                                 <div className="w-full border-t-2 border-gray-300 my-4 mx-auto"></div>
                                             </div>

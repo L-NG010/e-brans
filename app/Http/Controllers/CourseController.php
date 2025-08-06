@@ -21,14 +21,4 @@ class CourseController extends Controller
         'materi' => $materi
     ]);
 }
-
-// {
-//     $mapel = Mapel::all(); // Tidak perlu toArray() di sini
-//     $materi = Materi::with('mapel')->get(); // Gunakan eager loading
-
-//     return inertia('MateriPage', [
-//         'mapel' => $mapel,
-//         'materi' => $materi
-//     ]);
-// }
 }
