@@ -1,17 +1,18 @@
 import { motion, useAnimation } from "framer-motion";
+import { url } from "inspector";
 import { useEffect } from "react";
 
 const Perusahaan = () => {
-  const images = [
-    "assets/img/perusahaan/suzuki.png",
-    "assets/img/perusahaan/pama.png",
-    "assets/img/perusahaan/utschool.png",
-    "assets/img/perusahaan/amman.png",
-    "assets/img/perusahaan/ubig.png",
-    "assets/img/perusahaan/alatbrat.png",
+  const companies = [
+    {src: "assets/img/perusahaan/suzuki.png", url: "https://www.suzuki.co.id/"},
+    {src:"assets/img/perusahaan/pama.png", url: "https://www.pamapersada.com/"},
+    {src:"assets/img/perusahaan/utschool.png", url: "https://www.unitedtractors.com/"},
+    {src:"assets/img/perusahaan/amman.png", url: "https://www.amman.co.id/"},
+    {src:"assets/img/perusahaan/ubig.png", url: "https://www.ubig.co.id/"},
+    {src:"assets/img/perusahaan/alatbrat.png", url: "https://www.alatberat.com/"}
   ];
 
-  const duplicatedImages = [...images,...images,...images,...images,...images,...images, ...images];
+  const duplicatedImages = [...companies,...companies,...companies,...companies,...companies,...companies, ...companies];
 
   const controls = useAnimation();
 
@@ -48,21 +49,25 @@ const Perusahaan = () => {
           animate={controls}
           style={{ display: "inline-flex", whiteSpace: "nowrap" }}
         >
-          {duplicatedImages.map((src, index) => (
-            <motion.div
+          {duplicatedImages.map((item, index) => (
+            <motion.a
               key={index}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex-shrink-0"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
               viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
             >
               <img
-                src={src}
+                src={item.src}
                 alt={`Logo perusahaan ${index + 1}`}
                 className="h-20 md:h-24 object-contain"
               />
-            </motion.div>
+            </motion.a>
           ))}
         </motion.div>
       </div>
