@@ -1,15 +1,7 @@
 import React, { useState } from "react";
-import {
-    BookOpen,
-    Menu,
-    X,
-    ChevronLeft,
-    ChevronRight,
-    Clock,
-    Star,
-} from "lucide-react";
-import { MapelType } from "@/types/main/mapel";
-import { MateriType } from "@/types/main/materi";
+import { BookOpen, Menu, X, ChevronLeft, ChevronRight, Clock, Users, Star } from "lucide-react";
+import { MapelType } from "@/types/Main/mapel";
+import { MateriType } from "@/types/Main/materi";
 import { router } from "@inertiajs/react";
 
 interface MateriProps {
@@ -21,6 +13,7 @@ const MainSection = ({ materi, mapel }: MateriProps) => {
     const [hoveredCard, setHoveredCard] = useState<number | null>(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
+    console.log(materi);
     const currentMapelId = materi.length > 0 ? materi[0].mapel_id : 0;
     const currentMapel = mapel.find((m) => m.id === currentMapelId);
 
@@ -115,18 +108,33 @@ const MainSection = ({ materi, mapel }: MateriProps) => {
                             </>
                         )}
                     </div>
-                    <div className="bg-white border border-gray-200 rounded-xl p-2 lg:p-4 shadow-sm">
-                        {/* Konten Materi */}
-                        <div className="bg-white rounded-xl shadow-sm">
-                            <div className="rounded-lg p-4">
-                                {currentMateri && (
-                                    <div className="relative">
-                                        {/* Scrollable content */}
-                                        <div className="text-gray-800 max-h-96 overflow-y-auto scroll-smooth">
-                                            <div
-                                                className="prose prose-lg max-w-none text-base leading-relaxed"
-                                                dangerouslySetInnerHTML={createMarkup(currentMateri.konten)}
-                                            />
+
+                    <div className="bg-white border border-gray-200 rounded-xl p-4 lg:p-6 shadow-sm">
+                        <div className="mb-6">
+                            <div className="mb-4">
+                                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 text-gray-800 break-words">
+                                    {materi.map((item) => (
+                                        <div key={item.id} className="break-words">{item.judul}</div>
+
+                                    ))}
+                                </h2>
+                            </div>
+
+                            <div className="mb-6">
+                                <WebDevelopingIllustration mapel={mapel} materi={materi} />
+                            </div>
+
+                            <div className="space-y-4">
+                                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4">
+                                    <div className="text-gray-800 max-h-64 overflow-y-auto">
+                                        <div className="space-y-3 prose prose-sm max-w-none">
+                                            {materi.map((item) => (
+                                                <div key={item.id} className="break-words">
+                                                    <div
+                                                        className="text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: item.konten }}
+                                                    />
+                                                </div>
+                                            ))}
                                         </div>
 
                                         {/* Fade atas */}

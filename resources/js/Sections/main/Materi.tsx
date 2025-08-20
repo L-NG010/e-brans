@@ -1,8 +1,8 @@
 import { router } from "@inertiajs/react";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
-import { MapelType } from "@/types/main/mapel";
-import { MateriType } from "@/types/main/materi";
+import { MapelType } from "@/types/Main/mapel";
+import { MateriType } from "@/types/Main/materi";
 
 interface MateriProps {
     mapel: MapelType[];
@@ -62,7 +62,6 @@ const Materi = ({ mapel, materi }: MateriProps) => {
         }
     };
 
-    // Function to strip HTML tags and limit text
     const stripHtmlAndLimit = (html: string, limit: number = 100) => {
         if (!html) return '';
         const div = document.createElement('div');

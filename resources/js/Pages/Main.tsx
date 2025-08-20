@@ -1,15 +1,14 @@
-import AkreditasSection from "@/Sections/main/AkreditasSection";
-import MainSection from "@/Sections/main/MainSection";
+import AkreditasSection from "@/Sections/Main/AkreditasSection";
+import MainSection from "@/Sections/Main/MainSection";
 import Header from "@/Layouts/Header";
-import CourseSection from "@/Sections/main/CourseSection";
+import CourseSection from "@/Sections/Main/CourseSection";
 import Footer from "@/Layouts/Footer";
-import Materi from "@/Sections/main/Materi";
-import FirstSection from "@/Sections/main/FirstSection";
-import Perusahaan from "@/Sections/main/Perusahaan";
-import BottomSection from "@/Sections/main/BottomSection";
-import {MapelType} from "@/types/main/mapel";
-import { MateriType } from "@/types/main/materi";
-import { log } from "console";
+import Materi from "@/Sections/Main/Materi";
+import FirstSection from "@/Sections/Main/FirstSection";
+import Perusahaan from "@/Sections/Main/Perusahaan";
+import BottomSection from "@/Sections/Main/BottomSection";
+import {MapelType} from "@/types/Main/mapel";
+import { MateriType } from "@/types/Main/materi";
 
 interface MainProps {
   mapel: MapelType[];

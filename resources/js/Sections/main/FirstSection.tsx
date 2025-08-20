@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import IllustrationOne from '@/Component/IllustrationOne';
-import IllustrationTwo from '@/Component/IllustrationTwo';
-import IllustrationThree from '@/Component/IllustrationThree';
+import IllustrationOne from '@/Component/Main/IllustrationOne';
+import IllustrationTwo from '@/Component/Main/IllustrationTwo';
+import IllustrationThree from '@/Component/Main/IllustrationThree';
 
 const FirstSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
