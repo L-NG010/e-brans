@@ -8,6 +8,6 @@ use Illuminate\Http\Request;
 class AuthController extends Controller
 {
     public function loginAdmin(){
-        $admin = Admin::where()
+        $admin = Admin::where();
     }
 }

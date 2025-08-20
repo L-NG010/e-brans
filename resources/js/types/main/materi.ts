@@ -7,4 +7,6 @@ export interface MateriType {
   mapel_id: number;
   created_at: string;
   updated_at: string | null;
+  rangkuman : string;
+  jumlah_dilihat : number;
 }
